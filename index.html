@@ -398,6 +398,277 @@
       .seg-date__calendar{width:52px;height:56px}
     }
 
+
+    /* =========================================================
+       MOBILE WIDTH / OVERFLOW SAFETY
+       ========================================================= */
+    *,
+    *::before,
+    *::after{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
+    }
+
+    main,
+    section,
+    .card,
+    .surface,
+    .timeline-option,
+    .native-date-wrap,
+    .date-input-container,
+    .soft-input,
+    .native-date-input{
+      box-sizing:border-box;
+      max-width:100%;
+      min-width:0;
+    }
+
+    .timeline-option{
+      width:100%;
+      overflow:hidden;
+    }
+
+    /*
+      Responsive target-date field.
+      The date input takes all remaining width while its calendar control
+      remains inside the card's right edge.
+    */
+    .date-input-container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      box-sizing:border-box;
+      overflow:hidden;
+      border-radius:14px;
+      position:relative;
+    }
+
+    .date-input-container .native-date-wrap{
+      flex:1 1 auto;
+      width:100%;
+      min-width:0;
+      max-width:100%;
+      overflow:hidden;
+    }
+
+    .date-input-container input[type="date"]{
+      flex:1 1 auto;
+      width:100%;
+      min-width:0;
+      max-width:100%;
+      box-sizing:border-box;
+    }
+
+    /* Prevent native date controls from imposing intrinsic mobile widths. */
+    input[type="date"]{
+      min-width:0 !important;
+      max-width:100% !important;
+    }
+
+    /* =========================================================
+       MOBILE BOTTOM NAVIGATION
+       ========================================================= */
+    .mobile-bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:45;
+      display:none;
+      padding:8px 14px calc(8px + env(safe-area-inset-bottom));
+      background:rgba(12,12,14,.94);
+      border-top:1px solid rgba(255,255,255,.09);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
+
+    .mobile-bottom-nav__inner{
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .mobile-nav-btn{
+      min-height:56px;
+      border-radius:16px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:3px;
+      color:#77777f;
+      background:transparent;
+      font-size:12px;
+      font-weight:700;
+      transition:background-color .15s ease,color .15s ease,transform .12s ease;
+    }
+
+    .mobile-nav-btn:active{
+      transform:scale(.97);
+    }
+
+    .mobile-nav-btn svg{
+      width:23px;
+      height:23px;
+      stroke:currentColor;
+    }
+
+    .mobile-nav-btn.active{
+      color:#5aacff;
+      background:rgba(10,132,255,.12);
+    }
+
+    /* Desktop: both major views are always visible. */
+    #view-dashboard,
+    #view-workout{
+      display:block;
+      width:100%;
+      max-width:100%;
+    }
+
+    @media(max-width:767px){
+      body{
+        padding-bottom:calc(92px + env(safe-area-inset-bottom));
+      }
+
+      .mobile-bottom-nav{
+        display:block;
+      }
+
+      #view-dashboard.mobile-tab-hidden,
+      #view-workout.mobile-tab-hidden{
+        display:none !important;
+      }
+
+      /* Avoid any flex child forcing the goal evaluator wider than viewport. */
+      #view-dashboard > section,
+      #view-workout > section{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
+
+      .timeline-option,
+      .date-input-container,
+      .native-date-wrap{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
+    }
+
+    @media(min-width:768px){
+      #view-dashboard,
+      #view-workout{
+        display:block !important;
+      }
+
+      .mobile-bottom-nav{
+        display:none !important;
+      }
+    }
+
+
+    /* =========================================================
+       COMPACT TARGET-DATE PICKER
+       ========================================================= */
+    .compact-date-picker{
+      display:flex;
+      align-items:stretch;
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      background:#1c1c1e;
+    }
+
+    .compact-date-display{
+      flex:1 1 auto;
+      min-width:0;
+      width:100%;
+      height:58px;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:#f5f5f7;
+      padding:0 16px;
+      font-size:17px;
+      font-variant-numeric:tabular-nums;
+      cursor:default;
+    }
+
+    .compact-date-display::placeholder{
+      color:#77777f;
+    }
+
+    .compact-calendar-button{
+      position:relative;
+      flex:0 0 54px;
+      width:54px;
+      min-width:54px;
+      height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#ffffff;
+      border-left:1px solid rgba(255,255,255,.08);
+      background:#1c1c1e;
+      overflow:hidden;
+    }
+
+    .compact-calendar-button svg{
+      width:22px;
+      height:22px;
+      stroke:#ffffff;
+      pointer-events:none;
+    }
+
+    /*
+      The real native date input occupies only the small calendar-button area.
+      It is transparent but remains the actual touch target, so iOS/Android
+      receives a genuine tap and opens the system date picker.
+    */
+    .compact-native-date{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      opacity:0;
+      cursor:pointer;
+      z-index:3;
+      color-scheme:dark;
+      -webkit-appearance:auto;
+      appearance:auto;
+    }
+
+    .compact-native-date::-webkit-calendar-picker-indicator{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      opacity:0;
+      cursor:pointer;
+    }
+
+    .compact-date-picker:focus-within{
+      border-color:#0a84ff;
+      box-shadow:0 0 0 4px rgba(10,132,255,.12);
+    }
+
   </style>
 </head>
 <body>
@@ -412,6 +683,7 @@
     <button id="openSettingsBtn" class="btn btn-secondary self-start sm:self-auto">Settings</button>
   </header>
 
+  <div id="view-dashboard" class="mobile-tab-view">
   <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <div class="surface card p-5 sm:p-6">
       <p class="text-sm text-zinc-400">Current weight</p>
@@ -454,11 +726,32 @@
         <p class="text-sm text-zinc-500 mt-2">We calculate the weekly rate needed from your latest logged weight to your goal.</p>
       </div>
 
-      <div class="w-full lg:max-w-md">
+      <div class="w-full max-w-full min-w-0 lg:max-w-md">
         <div class="timeline-option">
           <p class="text-xs font-bold tracking-[.12em] text-zinc-500 mb-3">OPTION A · SPECIFIC DATE</p>
           <label class="block text-sm font-medium mb-2" for="dashboardTargetDate">Target date to reach goal</label>
-          <div class="native-date-wrap"><input id="dashboardTargetDate" type="date" class="native-date-input" aria-label="Target date"></div>
+          <div class="date-input-container compact-date-picker">
+            <input id="dashboardTargetDateDisplay"
+                   type="text"
+                   class="compact-date-display"
+                   placeholder="Select date"
+                   readonly
+                   aria-label="Selected target date">
+
+            <div class="compact-calendar-button" aria-label="Open target date calendar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                <path d="M16 3v4M8 3v4M3 11h18"></path>
+              </svg>
+
+              <input id="dashboardTargetDate"
+                     type="date"
+                     class="compact-native-date"
+                     aria-label="Target date">
+            </div>
+          </div>
         </div>
 
         <div class="timeline-option mt-3">
@@ -522,7 +815,9 @@
       <div class="mt-5 min-h-[240px]"><canvas id="weightChart"></canvas></div>
     </div>
   </section>
+  </div><!-- /#view-dashboard -->
 
+  <div id="view-workout" class="mobile-tab-view">
   <section class="mt-5">
     <div class="sticky-session surface card px-4 py-3 sm:px-5">
       <div class="flex items-center gap-3">
@@ -572,6 +867,45 @@
     <h2 class="text-2xl font-semibold mt-1">Completed sessions</h2>
     <div id="workoutHistory" class="mt-5 space-y-3"></div>
   </section>
+  </div><!-- /#view-workout -->
+
+
+  <nav id="mobileBottomNav" class="mobile-bottom-nav md:hidden" aria-label="Primary mobile navigation">
+    <div class="mobile-bottom-nav__inner">
+      <button id="navDashboardBtn"
+              class="mobile-nav-btn active"
+              type="button"
+              onclick="switchTab('dashboard')"
+              aria-label="Dashboard"
+              aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </button>
+
+      <button id="navWorkoutBtn"
+              class="mobile-nav-btn"
+              type="button"
+              onclick="switchTab('workout')"
+              aria-label="Workout">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6.5 6.5h11"></path>
+          <path d="M6.5 17.5h11"></path>
+          <path d="M4 9v6"></path>
+          <path d="M20 9v6"></path>
+          <path d="M2 10.5v3"></path>
+          <path d="M22 10.5v3"></path>
+          <path d="M8 8v8"></path>
+          <path d="M16 8v8"></path>
+        </svg>
+        <span>Workout</span>
+      </button>
+    </div>
+  </nav>
 
   <footer class="py-8 text-center text-xs sm:text-sm text-zinc-600">
     Calorie and timeline values are estimates for planning. Your data stays in this browser.
@@ -1047,8 +1381,18 @@
     const date=calculateTargetDateFromMethod(appData.profile,method,$("dashboardWeeks")?.value||"");
     if(date && $("dashboardTargetDate")){
       $("dashboardTargetDate").value=date;
+      syncDashboardTargetDateDisplay();
       $("dashboardAutoDateHint").textContent=`Calculated target: ${localeDateLabel(date)}`;
     }
+  }
+
+
+  function syncDashboardTargetDateDisplay(){
+    const native=document.getElementById("dashboardTargetDate");
+    const display=document.getElementById("dashboardTargetDateDisplay");
+    if(!native || !display) return;
+
+    display.value = native.value ? localeDateLabel(native.value) : "";
   }
 
   // ---------- Dashboard ----------
@@ -1067,6 +1411,7 @@
     $("daysRemaining").textContent=estimateDaysRemaining();
     $("bmrDisplay").textContent=calculateBMR(p,current);
     if(p.targetDate) $("dashboardTargetDate").value=p.targetDate;
+    syncDashboardTargetDateDisplay();
     renderTimeline();
   }
 
@@ -1727,7 +2072,7 @@
     const dashboard=$("dashboardTargetDate");
     if(dashboard){
       dashboard.min=tomorrow;
-      wireNativeDateInput("dashboardTargetDate");
+      dashboard.style.colorScheme="dark";
     }
 
     const weightDate=$("weightDate");
@@ -1770,6 +2115,88 @@
     if(appData.activeSession?.startTime) startTimerLoop();
   }
 
+
+  // ---------- Mobile bottom navigation ----------
+  function switchTab(tab, scrollToTop=true){
+    const dashboard=document.getElementById("view-dashboard");
+    const workout=document.getElementById("view-workout");
+    const dashboardBtn=document.getElementById("navDashboardBtn");
+    const workoutBtn=document.getElementById("navWorkoutBtn");
+
+    if(!dashboard || !workout) return;
+
+    const showWorkout=tab==="workout";
+
+    /*
+      These classes only hide content below 768px.
+      Desktop CSS explicitly forces both views visible.
+    */
+    dashboard.classList.toggle("mobile-tab-hidden",showWorkout);
+    workout.classList.toggle("mobile-tab-hidden",!showWorkout);
+
+    dashboardBtn?.classList.toggle("active",!showWorkout);
+    workoutBtn?.classList.toggle("active",showWorkout);
+
+    if(dashboardBtn){
+      if(!showWorkout) dashboardBtn.setAttribute("aria-current","page");
+      else dashboardBtn.removeAttribute("aria-current");
+    }
+
+    if(workoutBtn){
+      if(showWorkout) workoutBtn.setAttribute("aria-current","page");
+      else workoutBtn.removeAttribute("aria-current");
+    }
+
+    if(scrollToTop && window.innerWidth<768){
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    /*
+      Chart.js may have been initialized while its view was hidden.
+      Resize once Dashboard becomes visible so it fills the card correctly.
+    */
+    if(!showWorkout && chart){
+      requestAnimationFrame(()=>chart.resize());
+    }
+  }
+
+  // Make switchTab available to inline nav button handlers.
+  window.switchTab=switchTab;
+
+  function initializeResponsiveViews(){
+    if(window.innerWidth<768){
+      switchTab("dashboard",false);
+    }else{
+      document.getElementById("view-dashboard")?.classList.remove("mobile-tab-hidden");
+      document.getElementById("view-workout")?.classList.remove("mobile-tab-hidden");
+    }
+  }
+
+  window.addEventListener("resize",()=>{
+    if(window.innerWidth>=768){
+      document.getElementById("view-dashboard")?.classList.remove("mobile-tab-hidden");
+      document.getElementById("view-workout")?.classList.remove("mobile-tab-hidden");
+      if(chart) requestAnimationFrame(()=>chart.resize());
+    }
+  });
+
+
+
+  function wireCompactTargetCalendar(){
+    const input=document.getElementById("dashboardTargetDate");
+    if(!input) return;
+
+    input.addEventListener("change",syncDashboardTargetDateDisplay);
+
+    // Do not prevent the native click. The transparent input itself is the
+    // small calendar button's hit target. showPicker() is only a fallback.
+    input.addEventListener("touchend",()=>{
+      try{
+        if(typeof input.showPicker==="function") input.showPicker();
+      }catch{}
+    },{passive:true});
+  }
+
   // ---------- Events ----------
   document.addEventListener("splitdatechange",e=>{
     if(e.detail.id==="dob" || e.detail.id==="targetDate") updateOnboardingEstimate();
@@ -1779,6 +2206,7 @@
   $("dashboardWeeks").addEventListener("input",()=>applyTimelineMethod("dashboard"));
 
   $("dashboardTargetDate").addEventListener("change",()=>{
+    syncDashboardTargetDateDisplay();
     $("dashboardAutoDateHint").textContent=`Selected date: ${localeDateLabel($("dashboardTargetDate").value)}`;
   });
 
@@ -1907,6 +2335,9 @@
   renderCategoryChips();
   renderExerciseLibrary();
   launch();
+  wireCompactTargetCalendar();
+  syncDashboardTargetDateDisplay();
+  initializeResponsiveViews();
 })();
 </script>
 </body>
