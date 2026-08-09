@@ -669,6 +669,270 @@
       box-shadow:0 0 0 4px rgba(10,132,255,.12);
     }
 
+
+    /* ===== Profile inline editing ===== */
+    .profile-inline-row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .profile-inline-row:last-child{border-bottom:0}
+    .profile-inline-value{
+      display:flex;align-items:center;gap:8px;min-width:0;color:#f5f5f7;font-weight:600;
+    }
+    .edit-pencil{
+      width:32px;height:32px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+      color:#8e8e93;background:#202024;border:1px solid rgba(255,255,255,.07);flex:0 0 auto;
+    }
+    .edit-pencil svg{width:15px;height:15px;stroke:currentColor}
+    .inline-edit-input{
+      height:32px;min-height:32px;max-height:32px;
+      border-radius:8px;border:1px solid rgba(10,132,255,.55);
+      background:#1c1c1e;color:#f5f5f7;padding:3px 8px;
+      font:inherit;font-size:inherit;font-weight:inherit;line-height:1.2;
+      outline:none;min-width:0;width:min(190px,55vw);
+    }
+    .inline-date-edit{display:flex;align-items:center;gap:6px;min-width:0}
+    .inline-date-edit input[type="date"]{
+      height:32px;min-height:32px;font:inherit;font-size:inherit;font-weight:inherit;
+      padding:2px 6px;border-radius:8px;background:#1c1c1e;color:#fff;
+      border:1px solid rgba(10,132,255,.55);color-scheme:dark;min-width:135px;max-width:170px;
+    }
+    .inline-calendar-btn{
+      position:relative;width:32px;height:32px;border-radius:9px;background:#202024;
+      border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;
+      color:white;overflow:hidden;flex:0 0 32px;
+    }
+    .inline-calendar-btn svg{width:15px;height:15px;stroke:#fff;pointer-events:none}
+    .inline-calendar-btn input[type="date"]{
+      position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;
+    }
+
+    /* ===== Single compact date picker used in Log Weight ===== */
+    .mini-date-picker{
+      display:flex;align-items:stretch;width:100%;overflow:hidden;border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);background:#1c1c1e;
+    }
+    .mini-date-display{
+      flex:1;min-width:0;height:50px;border:0;outline:0;background:transparent;color:#fff;
+      padding:0 14px;font-size:16px;font-variant-numeric:tabular-nums;
+    }
+    .mini-date-trigger{
+      position:relative;width:50px;flex:0 0 50px;display:flex;align-items:center;justify-content:center;
+      border-left:1px solid rgba(255,255,255,.07);color:#fff;overflow:hidden;
+    }
+    .mini-date-trigger svg{width:19px;height:19px;stroke:#fff;pointer-events:none}
+    .mini-date-trigger input[type="date"]{
+      position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;color-scheme:dark;z-index:3;
+    }
+
+    /* ===== Exercise media / recommendations ===== */
+    .exercise-media-grid{
+      display:grid;grid-template-columns:minmax(0,1.35fr) minmax(120px,.65fr);gap:10px;margin-top:12px;
+    }
+    .exercise-motion-card,.muscle-map-card{
+      border-radius:16px;border:1px solid rgba(255,255,255,.06);background:#151518;overflow:hidden;
+      min-height:150px;position:relative;
+    }
+    .exercise-motion-card img{
+      width:100%;height:170px;object-fit:contain;background:#f4f4f4;display:block;
+    }
+    .motion-badge{
+      position:absolute;left:8px;bottom:8px;padding:5px 8px;border-radius:999px;
+      background:rgba(0,0,0,.68);color:#fff;font-size:10px;font-weight:700;
+    }
+    .muscle-map-card{display:flex;align-items:center;justify-content:center;padding:8px}
+    .muscle-map-card svg{width:100%;height:170px}
+    .recommendation-card{
+      margin-top:12px;border-radius:14px;padding:12px 13px;
+      background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.18);
+    }
+    .recommendation-card strong{color:#79baff}
+    .recommendation-meta{font-size:12px;color:#85858d;margin-top:4px;line-height:1.45}
+
+    .deficit-control{
+      margin-top:16px;border-radius:16px;padding:14px;background:#151518;border:1px solid rgba(255,255,255,.06);
+    }
+
+    @media(max-width:560px){
+      .exercise-media-grid{grid-template-columns:1fr 116px}
+      .exercise-motion-card img,.muscle-map-card svg{height:138px}
+      .inline-date-edit input[type="date"]{min-width:118px;max-width:145px}
+    }
+
+
+    /* ===== Exercise preview modal ===== */
+    .preview-motion-shell{
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(120px,.65fr);
+      gap:12px;
+    }
+    .preview-motion-panel,
+    .preview-muscle-panel{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.07);
+      background:#151518;
+      min-height:180px;
+    }
+    .preview-motion-panel{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .preview-motion-panel img{
+      width:100%;
+      height:260px;
+      object-fit:contain;
+      background:#f4f4f4;
+      display:block;
+    }
+    .preview-motion-label{
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      font-size:11px;
+      font-weight:700;
+    }
+    .preview-muscle-panel{
+      padding:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .preview-muscle-panel svg{
+      width:100%;
+      height:240px;
+    }
+    @media(max-width:560px){
+      .preview-motion-shell{
+        grid-template-columns:1fr 112px;
+      }
+      .preview-motion-panel img{height:190px}
+      .preview-muscle-panel svg{height:180px}
+    }
+
+
+    .gif-fallback{
+      object-fit:contain !important;
+      background:#101012 !important;
+    }
+
+
+    /* ===== Simplified full-width exercise GIF preview ===== */
+    .preview-motion-shell{
+      display:block !important;
+      width:100%;
+      max-width:100%;
+    }
+
+    .preview-motion-panel{
+      width:100%;
+      max-width:100%;
+      min-height:260px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.07);
+      background:#f4f4f4;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .preview-motion-panel img{
+      display:block;
+      width:100%;
+      height:auto;
+      min-height:280px;
+      max-height:460px;
+      object-fit:contain;
+      background:#f4f4f4;
+    }
+
+    .preview-muscle-panel{
+      display:none !important;
+    }
+
+    .preview-motion-label{
+      position:absolute;
+      left:12px;
+      bottom:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    /* Exercise library cards now prioritize the real animated GIF. */
+    .exercise-gif-preview{
+      width:100%;
+      height:150px;
+      object-fit:contain;
+      background:#f4f4f4;
+      display:block;
+      border-radius:12px;
+    }
+
+    .exercise-gif-loading{
+      width:100%;
+      height:150px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#121214;
+      color:#77777f;
+      font-size:12px;
+      border-radius:12px;
+    }
+
+    @media(max-width:560px){
+      .preview-motion-panel{
+        min-height:220px;
+      }
+
+      .preview-motion-panel img{
+        min-height:220px;
+        max-height:340px;
+      }
+
+      .exercise-gif-preview,
+      .exercise-gif-loading{
+        height:132px;
+      }
+    }
+
+
+    .gif-spinner{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:3px solid rgba(255,255,255,.14);
+      border-top-color:#0a84ff;
+      animation:gifSpin .8s linear infinite;
+    }
+
+    @keyframes gifSpin{
+      to{transform:rotate(360deg)}
+    }
+
+    .preview-motion-panel .exercise-gif-loading{
+      min-height:260px;
+      width:100%;
+      border-radius:0;
+      background:#151518;
+    }
+
+    .exercise-gif-preview{
+      animation-play-state:running;
+    }
+
   </style>
 </head>
 <body>
@@ -703,7 +967,15 @@
         <div id="progressBar" class="h-full rounded-full bg-blue-500 transition-all duration-500" style="width:0%"></div>
       </div>
       <div class="mt-4 flex justify-between text-sm gap-3">
-        <span class="text-zinc-500">Start: <strong id="startWeightDisplay" class="text-zinc-200">--</strong></span>
+        <span class="text-zinc-500 flex items-center gap-1.5">
+          Start:
+          <strong id="startWeightDisplay" class="text-zinc-200">--</strong>
+          <button id="editStartWeightBtn" class="edit-pencil !w-7 !h-7" type="button" aria-label="Edit starting weight">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+            </svg>
+          </button>
+        </span>
         <span class="text-zinc-500 text-right">Goal: <strong id="goalWeightDisplay" class="text-zinc-200">--</strong></span>
       </div>
     </div>
@@ -841,6 +1113,23 @@
           </div>
         </div>
         <button id="addExerciseBtn" class="btn btn-secondary">+ Add Exercise</button>
+      </div>
+
+      <div class="deficit-control">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <p class="text-sm font-semibold">Workout recommendation target</p>
+            <p class="text-xs text-zinc-500 mt-1">Volume adapts to your selected calorie deficit and completed work.</p>
+          </div>
+          <select id="workoutDeficitTarget" class="soft-input sm:max-w-[220px]">
+            <option value="auto">Auto from goal timeline</option>
+            <option value="0">Maintenance (0 kcal)</option>
+            <option value="250">250 kcal deficit</option>
+            <option value="500">500 kcal deficit</option>
+            <option value="750">750 kcal deficit</option>
+          </select>
+        </div>
+        <p id="deficitRecommendationHint" class="text-xs text-zinc-500 mt-3"></p>
       </div>
 
       <div id="activeExerciseList" class="mt-6"></div>
@@ -1010,8 +1299,16 @@
         </div>
         <div>
           <label class="block text-sm font-medium mb-2" for="weightDate">Date</label>
-          <div class="native-date-wrap"><input id="weightDate" type="date" class="native-date-input" aria-label="Weight log date" required></div>
-          <p id="weightDateLocaleHint" class="text-xs text-zinc-600 mt-2"></p>
+          <div class="mini-date-picker">
+            <input id="weightDateDisplay" class="mini-date-display" type="text" readonly placeholder="Select date" aria-label="Selected weight date">
+            <div class="mini-date-trigger" aria-label="Open weight date calendar">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                <path d="M16 3v4M8 3v4M3 11h18"></path>
+              </svg>
+              <input id="weightDate" type="date" aria-label="Weight log date" required>
+            </div>
+          </div>
         </div>
         <button class="btn btn-primary w-full">Save weight</button>
       </form>
@@ -1048,6 +1345,38 @@
           </select>
         </div>
         <button id="addCustomExerciseBtn" class="btn btn-secondary w-full mt-3">Add custom exercise</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Exercise Technique Preview Modal -->
+<div id="exercisePreviewModal" class="hidden fixed inset-0 z-[60] modal-backdrop overflow-y-auto">
+  <div class="min-h-full flex items-end sm:items-center justify-center sm:p-4">
+    <div class="surface w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[28px] p-5 sm:p-6 max-h-[92vh] overflow-y-auto">
+      <div class="w-12 h-1.5 rounded-full bg-zinc-700 mx-auto mb-5 sm:hidden"></div>
+
+      <div class="flex items-start justify-between gap-4">
+        <div class="min-w-0">
+          <p id="previewExerciseCategory" class="text-xs font-bold tracking-[.12em] text-blue-400 uppercase">Exercise</p>
+          <h2 id="previewExerciseName" class="text-2xl sm:text-3xl font-semibold mt-1">Exercise Preview</h2>
+        </div>
+        <button id="closeExercisePreviewBtn" type="button" class="delete-x" aria-label="Close exercise preview">×</button>
+      </div>
+
+      <div id="previewExerciseMedia" class="mt-5"></div>
+
+      <div class="rounded-2xl bg-zinc-900/80 border border-white/5 p-4 mt-4">
+        <p class="text-sm font-semibold">Form cues</p>
+        <p id="previewExerciseDescription" class="text-sm text-zinc-400 mt-2 leading-relaxed"></p>
+      </div>
+
+      <div id="previewExerciseRecommendation" class="recommendation-card mt-4"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+        <button id="previewBackBtn" type="button" class="btn btn-secondary w-full">Back / Close</button>
+        <button id="previewLogExerciseBtn" type="button" class="btn btn-primary w-full">Log / Start Exercise</button>
       </div>
     </div>
   </div>
@@ -1096,6 +1425,42 @@
         <button id="closeSettingsBtn" class="btn btn-secondary py-2 px-3">Close</button>
       </div>
 
+      <div class="mt-6 rounded-2xl bg-zinc-900/70 border border-white/5 px-4">
+        <div class="profile-inline-row">
+          <span class="text-sm text-zinc-500">Name</span>
+          <div class="profile-inline-value">
+            <span id="settingsNameValue">--</span>
+            <button id="editNameBtn" type="button" class="edit-pencil" aria-label="Edit name">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="profile-inline-row">
+          <span class="text-sm text-zinc-500">Date of birth</span>
+          <div class="profile-inline-value">
+            <span id="settingsDobValue">--</span>
+            <button id="editDobBtn" type="button" class="edit-pencil" aria-label="Edit date of birth">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="profile-inline-row">
+          <span class="text-sm text-zinc-500">Starting weight</span>
+          <div class="profile-inline-value">
+            <span id="settingsStartWeightValue">--</span>
+            <button id="editSettingsStartWeightBtn" type="button" class="edit-pencil" aria-label="Edit starting weight">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-6 space-y-3">
         <button id="exportBtn" class="btn btn-secondary w-full">Export backup</button>
         <label class="btn btn-secondary w-full block text-center cursor-pointer">
@@ -1114,51 +1479,237 @@
   let chart = null;
   let timerInterval = null;
   let selectedCategory = "All";
+  const EXERCISEDB_API_BASE = "https://oss.exercisedb.dev/api/v1/exercises";
+  const EXERCISEDB_SEARCH_URL = "https://oss.exercisedb.dev/api/v1/exercises/search";
+  const EXERCISEDB_CDN_BASE = "https://static.exercisedb.dev/media/";
+  const exerciseGifCache = new Map();
 
   const $ = id => document.getElementById(id);
   const todayISO = () => new Date().toISOString().slice(0,10);
   const uid = () => crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
   const EXERCISES = [
-    {name:"Bench Press (Barbell)",category:"Chest",type:"strength",icon:"🏋️",desc:"Lie flat, keep shoulder blades retracted, lower the bar with control, and press without bouncing it off the chest."},
-    {name:"Incline Dumbbell Press",category:"Chest",type:"strength",icon:"🏋️",desc:"Set the bench to a moderate incline, lower dumbbells beside the upper chest, then press while keeping wrists stacked."},
-    {name:"Pec Deck (Machine)",category:"Chest",type:"strength",icon:"🪽",desc:"Keep your back against the pad and bring the handles together in a smooth arc without shrugging the shoulders."},
-    {name:"Cable Fly",category:"Chest",type:"strength",icon:"↔️",desc:"Keep a slight elbow bend and sweep the handles together while maintaining a stable torso."},
+    {
+      name:"Bench Press (Barbell)", category:"Chest", type:"strength", icon:"🏋️",
+      officialName:"barbell bench press",
+      searchTerms:['barbell bench press', 'bench press barbell', 'bench press'],
+      gifUrl:"https://static.exercisedb.dev/media/EIeI8Vf.gif",
+      desc:"Lie flat, retract and depress the shoulder blades, lower the bar under control to mid-chest, then press without bouncing."
+    },
+    {
+      name:"Incline Dumbbell Press", category:"Chest", type:"strength", icon:"🏋️",
+      officialName:"incline dumbbell press",
+      searchTerms:['incline dumbbell press', 'dumbbell incline bench press', 'incline bench press dumbbell'],
+      gifUrl:null,
+      desc:"Set the bench to a moderate incline, lower the dumbbells beside the upper chest, then press while keeping wrists stacked."
+    },
+    {
+      name:"Pec Deck (Machine)", category:"Chest", type:"strength", icon:"🪽",
+      officialName:"lever pec deck fly",
+      searchTerms:['lever pec deck fly', 'pec deck fly', 'machine chest fly', 'butterfly'],
+      gifUrl:null,
+      desc:"Keep your back against the pad and bring the handles together in a smooth arc without shrugging the shoulders."
+    },
+    {
+      name:"Cable Fly", category:"Chest", type:"strength", icon:"↔️",
+      officialName:"cable crossover",
+      searchTerms:['cable crossover', 'cable fly', 'standing cable fly'],
+      gifUrl:null,
+      desc:"Keep a slight elbow bend and sweep the handles together while maintaining a stable torso."
+    },
 
-    {name:"Lat Pulldown",category:"Back",type:"strength",icon:"⬇️",desc:"Pull the bar toward the upper chest while keeping the ribs down and driving the elbows toward your sides."},
-    {name:"Seated Cable Row",category:"Back",type:"strength",icon:"🚣",desc:"Sit tall, pull toward the lower ribs, and squeeze the shoulder blades without leaning far backward."},
-    {name:"Dumbbell Row",category:"Back",type:"strength",icon:"🏋️",desc:"Brace the torso and pull the dumbbell toward the hip while keeping the shoulder away from the ear."},
-    {name:"Deadlift",category:"Back",type:"strength",icon:"⬆️",desc:"Brace your core, keep the bar close, and stand by extending the hips and knees while maintaining a neutral spine."},
+    {
+      name:"Lat Pulldown", category:"Back", type:"strength", icon:"⬇️",
+      officialName:"wide grip lat pulldown",
+      searchTerms:['wide grip lat pulldown', 'lat pulldown', 'cable lat pulldown'],
+      gifUrl:null,
+      desc:"Pull the bar toward the upper chest while keeping the ribs down and driving the elbows toward your sides."
+    },
+    {
+      name:"Seated Cable Row", category:"Back", type:"strength", icon:"🚣",
+      officialName:"seated cable row",
+      searchTerms:['seated cable row', 'seated cable rows', 'cable seated row'],
+      gifUrl:null,
+      desc:"Sit tall, pull toward the lower ribs, and squeeze the shoulder blades without leaning far backward."
+    },
+    {
+      name:"Dumbbell Row", category:"Back", type:"strength", icon:"🏋️",
+      officialName:"one arm dumbbell row",
+      searchTerms:['one arm dumbbell row', 'dumbbell row', 'single arm dumbbell row'],
+      gifUrl:null,
+      desc:"Brace the torso and pull the dumbbell toward the hip while keeping the shoulder away from the ear."
+    },
+    {
+      name:"Deadlift", category:"Back", type:"strength", icon:"⬆️",
+      officialName:"barbell deadlift",
+      searchTerms:['barbell deadlift', 'conventional deadlift', 'deadlift'],
+      gifUrl:"https://static.exercisedb.dev/media/ila4NZS.gif",
+      desc:"Set the bar over mid-foot, brace hard, keep it close to the legs, and stand by extending the hips and knees with a neutral spine."
+    },
 
-    {name:"Squat (Barbell)",category:"Legs",type:"strength",icon:"🦵",desc:"Brace your trunk, sit between the hips, keep knees tracking over the feet, and drive through the whole foot."},
-    {name:"Leg Press",category:"Legs",type:"strength",icon:"🦵",desc:"Keep hips against the pad, lower the platform under control, and avoid locking the knees hard at the top."},
-    {name:"Leg Extension",category:"Legs",type:"strength",icon:"🦿",desc:"Align the machine pivot with the knee joint and extend smoothly without swinging the weight."},
-    {name:"Leg Curl",category:"Legs",type:"strength",icon:"🦿",desc:"Keep the hips stable against the pad and curl through the hamstrings without arching the lower back."},
-    {name:"Romanian Deadlift",category:"Legs",type:"strength",icon:"🏋️",desc:"Push the hips back with a soft knee bend, keep the load close to the legs, and stop when hamstrings are fully tensioned."},
-    {name:"Calf Raise",category:"Legs",type:"strength",icon:"🦶",desc:"Use a full comfortable range, pause near the top, and lower the heel under control."},
+    {
+      name:"Squat (Barbell)", category:"Legs", type:"strength", icon:"🦵",
+      officialName:"barbell full squat",
+      searchTerms:['barbell full squat', 'barbell back squat', 'barbell squat'],
+      gifUrl:"https://static.exercisedb.dev/media/qXTaZnJ.gif",
+      desc:"Brace your trunk, keep knees tracking over the feet, descend under control, and drive through the whole foot to stand."
+    },
+    {
+      name:"Leg Press", category:"Legs", type:"strength", icon:"🦵",
+      officialName:"sled 45 degree leg press",
+      searchTerms:['sled 45 degree leg press', '45 degree leg press', 'leg press'],
+      gifUrl:null,
+      desc:"Keep hips against the pad, lower the platform under control, and avoid forcefully locking the knees at the top."
+    },
+    {
+      name:"Leg Extension", category:"Legs", type:"strength", icon:"🦿",
+      officialName:"lever leg extension",
+      searchTerms:['lever leg extension', 'leg extension', 'machine leg extension'],
+      gifUrl:null,
+      desc:"Align the machine pivot with the knee joint and extend smoothly without swinging the weight."
+    },
+    {
+      name:"Leg Curl", category:"Legs", type:"strength", icon:"🦿",
+      officialName:"lever lying leg curl",
+      searchTerms:['lever lying leg curl', 'lying leg curl', 'seated leg curl', 'leg curl'],
+      gifUrl:null,
+      desc:"Keep the hips stable against the pad and curl through the hamstrings without arching the lower back."
+    },
+    {
+      name:"Romanian Deadlift", category:"Legs", type:"strength", icon:"🏋️",
+      officialName:"barbell romanian deadlift",
+      searchTerms:['barbell romanian deadlift', 'romanian deadlift', 'stiff leg deadlift'],
+      gifUrl:null,
+      desc:"Push the hips back with a soft knee bend, keep the bar close, and stop when the hamstrings are fully tensioned."
+    },
+    {
+      name:"Calf Raise", category:"Legs", type:"strength", icon:"🦶",
+      officialName:"standing calf raise",
+      searchTerms:['standing calf raise', 'standing calf raises', 'calf raise'],
+      gifUrl:null,
+      desc:"Use a full comfortable range, pause near the top, and lower the heel under control."
+    },
 
-    {name:"Shoulder Press",category:"Shoulders",type:"strength",icon:"⬆️",desc:"Keep the ribs stacked over the pelvis and press overhead without excessive lower-back arching."},
-    {name:"Lateral Raise",category:"Shoulders",type:"strength",icon:"🪽",desc:"Raise the arms out to the sides with a soft elbow bend and stop around shoulder height without swinging."},
-    {name:"Rear Delt Fly",category:"Shoulders",type:"strength",icon:"🪽",desc:"Hinge or use a machine and sweep the arms outward while keeping the shoulder blades controlled."},
+    {
+      name:"Shoulder Press", category:"Shoulders", type:"strength", icon:"⬆️",
+      officialName:"dumbbell shoulder press",
+      searchTerms:['dumbbell shoulder press', 'shoulder press', 'seated dumbbell shoulder press'],
+      gifUrl:null,
+      desc:"Keep the ribs stacked over the pelvis and press overhead without excessive lower-back arching."
+    },
+    {
+      name:"Lateral Raise", category:"Shoulders", type:"strength", icon:"🪽",
+      officialName:"dumbbell lateral raise",
+      searchTerms:['dumbbell lateral raise', 'side lateral raise', 'lateral raise'],
+      gifUrl:"https://static.exercisedb.dev/media/DsgkuIt.gif",
+      desc:"Raise the arms out to the sides with a soft elbow bend and stop around shoulder height without swinging."
+    },
+    {
+      name:"Rear Delt Fly", category:"Shoulders", type:"strength", icon:"🪽",
+      officialName:"dumbbell reverse fly",
+      searchTerms:['dumbbell reverse fly', 'reverse fly', 'rear delt fly', 'seated bent over rear delt raise'],
+      gifUrl:null,
+      desc:"Hinge or use a supported position and sweep the arms outward while keeping the shoulder blades controlled."
+    },
 
-    {name:"Bicep Curl (Dumbbell)",category:"Arms",type:"strength",icon:"💪",desc:"Keep elbows near your sides and curl without rocking your torso or letting the shoulders roll forward."},
-    {name:"Hammer Curl",category:"Arms",type:"strength",icon:"💪",desc:"Use a neutral grip, keep elbows fixed, and lift with control instead of swinging."},
-    {name:"Tricep Pushdown",category:"Arms",type:"strength",icon:"💪",desc:"Keep elbows pinned near your sides and extend the forearms fully without moving the upper arms."},
-    {name:"Skull Crusher",category:"Arms",type:"strength",icon:"🏋️",desc:"Keep upper arms relatively still and bend only at the elbows as the weight moves toward the forehead or behind the head."},
+    {
+      name:"Bicep Curl (Dumbbell)", category:"Arms", type:"strength", icon:"💪",
+      officialName:"dumbbell biceps curl",
+      searchTerms:['dumbbell biceps curl', 'dumbbell bicep curl', 'dumbbell curl'],
+      gifUrl:"https://static.exercisedb.dev/media/NbVPDMW.gif",
+      desc:"Keep elbows near your sides and curl without rocking your torso or letting the shoulders roll forward."
+    },
+    {
+      name:"Hammer Curl", category:"Arms", type:"strength", icon:"💪",
+      officialName:"dumbbell hammer curl",
+      searchTerms:['dumbbell hammer curl', 'hammer curl', 'hammer curls'],
+      gifUrl:null,
+      desc:"Use a neutral grip, keep elbows fixed, and lift with control instead of swinging."
+    },
+    {
+      name:"Tricep Pushdown", category:"Arms", type:"strength", icon:"💪",
+      officialName:"cable triceps pushdown",
+      searchTerms:['cable triceps pushdown', 'triceps pushdown', 'cable pushdown'],
+      gifUrl:null,
+      desc:"Keep elbows pinned near your sides and extend the forearms fully without moving the upper arms."
+    },
+    {
+      name:"Skull Crusher", category:"Arms", type:"strength", icon:"🏋️",
+      officialName:"barbell lying triceps extension skull crusher",
+      searchTerms:['barbell lying triceps extension skull crusher', 'skull crusher', 'lying triceps extension'],
+      gifUrl:null,
+      desc:"Keep the upper arms relatively still and bend at the elbows as the bar moves toward the forehead or just behind the head."
+    },
 
-    {name:"Plank",category:"Core",type:"strength",icon:"🧱",desc:"Maintain a straight line from shoulders to heels, brace the abdomen, and avoid letting the hips sag."},
-    {name:"Cable Crunch",category:"Core",type:"strength",icon:"🧎",desc:"Curl the ribs toward the pelvis using the abs instead of pulling mainly with the arms."},
-    {name:"Hanging Knee Raise",category:"Core",type:"strength",icon:"🧗",desc:"Raise the knees by curling the pelvis upward and minimize swinging from the shoulders."},
+    {
+      name:"Plank", category:"Core", type:"strength", icon:"🧱",
+      officialName:"front plank",
+      searchTerms:['front plank', 'plank'],
+      gifUrl:null,
+      desc:"Maintain a straight line from shoulders to heels, brace the abdomen, and avoid letting the hips sag."
+    },
+    {
+      name:"Cable Crunch", category:"Core", type:"strength", icon:"🧎",
+      officialName:"cable kneeling crunch",
+      searchTerms:['cable kneeling crunch', 'cable crunch', 'kneeling cable crunch'],
+      gifUrl:null,
+      desc:"Curl the ribs toward the pelvis using the abs instead of pulling mainly with the arms."
+    },
+    {
+      name:"Hanging Knee Raise", category:"Core", type:"strength", icon:"🧗",
+      officialName:"hanging knee raise",
+      searchTerms:['hanging knee raise', 'hanging leg raise'],
+      gifUrl:null,
+      desc:"Raise the knees by curling the pelvis upward and minimize swinging from the shoulders."
+    },
 
-    {name:"Treadmill",category:"Cardio",type:"cardio",icon:"🏃",desc:"Walk or run at a sustainable pace while keeping posture tall and using the rails only when needed for balance."},
-    {name:"Incline Treadmill",category:"Cardio",type:"cardio",icon:"⛰️",desc:"Use an incline that lets you maintain steady posture and avoid leaning heavily on the handrails."},
-    {name:"Stairmaster",category:"Cardio",type:"cardio",icon:"🪜",desc:"Step with controlled rhythm, keep your torso tall, and avoid supporting excessive body weight on the handles."},
-    {name:"Elliptical",category:"Cardio",type:"cardio",icon:"🔄",desc:"Keep feet planted on the pedals and maintain a smooth stride with steady upper-body posture."},
-    {name:"Stationary Bike",category:"Cardio",type:"cardio",icon:"🚴",desc:"Set the seat so the knee stays slightly bent at the bottom of the pedal stroke and maintain a smooth cadence."},
-    {name:"Rowing Machine",category:"Cardio",type:"cardio",icon:"🚣",desc:"Drive first with the legs, then open the hips and finish with the arms; reverse that order on the return."}
+    {
+      name:"Treadmill", category:"Cardio", type:"cardio", icon:"🏃",
+      officialName:"walking on treadmill",
+      searchTerms:['walking on treadmill', 'running treadmill', 'treadmill'],
+      gifUrl:null,
+      desc:"Walk or run at a sustainable pace while keeping posture tall and using the rails only when needed for balance."
+    },
+    {
+      name:"Incline Treadmill", category:"Cardio", type:"cardio", icon:"⛰️",
+      officialName:"walking on incline treadmill",
+      searchTerms:['walking on incline treadmill', 'incline treadmill', 'walking treadmill incline'],
+      gifUrl:null,
+      desc:"Use an incline that lets you maintain steady posture and avoid leaning heavily on the handrails."
+    },
+    {
+      name:"Stairmaster", category:"Cardio", type:"cardio", icon:"🪜",
+      officialName:"walking on stepmill",
+      searchTerms:['walking on stepmill', 'stepmill', 'stair machine', 'stairmaster'],
+      gifUrl:null,
+      desc:"Step with controlled rhythm, keep your torso tall, and avoid supporting excessive body weight on the handles."
+    },
+    {
+      name:"Elliptical", category:"Cardio", type:"cardio", icon:"🔄",
+      officialName:"elliptical machine",
+      searchTerms:['elliptical machine', 'elliptical trainer', 'elliptical'],
+      gifUrl:null,
+      desc:"Keep feet planted on the pedals and maintain a smooth stride with steady upper-body posture."
+    },
+    {
+      name:"Stationary Bike", category:"Cardio", type:"cardio", icon:"🚴",
+      officialName:"stationary bike",
+      searchTerms:['stationary bike', 'stationary bicycling', 'exercise bike'],
+      gifUrl:null,
+      desc:"Set the seat so the knee stays slightly bent at the bottom of the pedal stroke and maintain a smooth cadence."
+    },
+    {
+      name:"Rowing Machine", category:"Cardio", type:"cardio", icon:"🚣",
+      officialName:"rowing machine",
+      searchTerms:['rowing machine', 'rowing stationary', 'stationary rowing'],
+      gifUrl:null,
+      desc:"Drive first with the legs, then open the hips and finish with the arms; reverse that order on the return."
+    }
   ];
 
   const CATEGORIES = ["All","Chest","Back","Legs","Shoulders","Arms","Core","Cardio"];
+
+
 
   const defaultData = {
     profile:null,
@@ -1387,6 +1938,11 @@
   }
 
 
+  function syncWeightDateDisplay(){
+    const native=$("weightDate"), display=$("weightDateDisplay");
+    if(native&&display) display.value=native.value?localeDateLabel(native.value):"";
+  }
+
   function syncDashboardTargetDateDisplay(){
     const native=document.getElementById("dashboardTargetDate");
     const display=document.getElementById("dashboardTargetDateDisplay");
@@ -1410,7 +1966,11 @@
     $("progressBar").style.width=`${progressPercent()}%`;
     $("daysRemaining").textContent=estimateDaysRemaining();
     $("bmrDisplay").textContent=calculateBMR(p,current);
+    if($("settingsNameValue")) $("settingsNameValue").textContent=p.name||"—";
+    if($("settingsDobValue")) $("settingsDobValue").textContent=p.dob?localeDateLabel(p.dob):"—";
+    if($("settingsStartWeightValue")) $("settingsStartWeightValue").textContent=`${Number(p.startWeight).toFixed(1)} ${unit}`;
     if(p.targetDate) $("dashboardTargetDate").value=p.targetDate;
+    if($("workoutDeficitTarget")) $("workoutDeficitTarget").value=String(p.dailyDeficitTarget??"auto");
     syncDashboardTargetDateDisplay();
     renderTimeline();
   }
@@ -1474,6 +2034,374 @@
       }
     });
   }
+
+
+  // ---------- Profile inline editing ----------
+  function saveProfileAndRefresh(){
+    saveData();
+    renderDashboard();
+    renderChart();
+    renderLiveStats();
+  }
+
+  function beginInlineTextEdit(valueElId,buttonId,currentValue,onSave,options={}){
+    const valueEl=$(valueElId), button=$(buttonId);
+    if(!valueEl || !button) return;
+    const original=valueEl.innerHTML;
+    button.disabled=true;
+
+    const input=document.createElement("input");
+    input.className="inline-edit-input";
+    input.type=options.type||"text";
+    if(options.step) input.step=options.step;
+    if(options.min) input.min=options.min;
+    input.value=currentValue ?? "";
+    valueEl.replaceChildren(input);
+    input.focus();
+    input.select?.();
+
+    const cancel=()=>{
+      valueEl.innerHTML=original;
+      button.disabled=false;
+    };
+    const save=()=>{
+      const v=input.value.trim();
+      if(!v) return cancel();
+      onSave(v);
+      button.disabled=false;
+    };
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){e.preventDefault();save();}
+      if(e.key==="Escape"){e.preventDefault();cancel();}
+    });
+    input.addEventListener("blur",()=>{ if(document.body.contains(input)) save(); },{once:true});
+  }
+
+  function beginDobEdit(){
+    const valueEl=$("settingsDobValue"),button=$("editDobBtn");
+    if(!valueEl||!button) return;
+    const original=valueEl.innerHTML;
+    button.disabled=true;
+
+    const wrap=document.createElement("div");
+    wrap.className="inline-date-edit";
+    wrap.innerHTML=`
+      <input id="inlineDobInput" type="date" min="1900-01-01" max="${todayISO()}" value="${appData.profile.dob||""}">
+      <div class="inline-calendar-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path>
+        </svg>
+        <input id="inlineDobPicker" type="date" min="1900-01-01" max="${todayISO()}" value="${appData.profile.dob||""}">
+      </div>`;
+    valueEl.replaceChildren(wrap);
+    const input=wrap.querySelector("#inlineDobInput");
+    const picker=wrap.querySelector("#inlineDobPicker");
+    input.focus();
+
+    const cancel=()=>{valueEl.innerHTML=original;button.disabled=false;};
+    const save=()=>{
+      if(!input.value) return cancel();
+      appData.profile.dob=input.value;
+      button.disabled=false;
+      saveProfileAndRefresh();
+    };
+
+    picker.addEventListener("change",()=>{input.value=picker.value;save();});
+    input.addEventListener("change",save);
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){e.preventDefault();save();}
+      if(e.key==="Escape"){e.preventDefault();cancel();}
+    });
+  }
+
+  // ---------- Official ExerciseDB GIF resolver ----------
+  function normalizeExerciseName(s){
+    return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  }
+
+  function exerciseSearchTerms(exercise){
+    const terms=[
+      ...(exercise?.searchTerms||[]),
+      exercise?.officialName,
+      exercise?.name
+    ].filter(Boolean);
+
+    return [...new Set(terms.map(v=>String(v).trim()).filter(Boolean))];
+  }
+
+  function scoreExerciseCandidate(candidate,term,exercise){
+    const name=normalizeExerciseName(candidate?.name);
+    const wanted=normalizeExerciseName(term);
+    if(!name || !wanted || !candidate?.gifUrl) return -1;
+
+    let score=0;
+    if(name===wanted) score+=100;
+    if(name.includes(wanted) || wanted.includes(name)) score+=45;
+
+    const wantedTokens=wanted.split(" ").filter(t=>t.length>2);
+    const matched=wantedTokens.filter(t=>name.includes(t)).length;
+    score+=matched*12;
+
+    // Strong equipment/movement checks for movements where mismatching matters.
+    const appName=normalizeExerciseName(exercise?.name);
+    if(appName.includes("bench press") && name.includes("bench press")) score+=35;
+    if(appName.includes("incline") && name.includes("incline")) score+=30;
+    if(appName.includes("deadlift") && name.includes("deadlift")) score+=35;
+    if(appName.includes("squat") && name.includes("squat")) score+=35;
+    if(appName.includes("lat pulldown") && name.includes("pulldown")) score+=35;
+    if(appName.includes("row") && name.includes("row")) score+=25;
+    if(appName.includes("leg press") && name.includes("leg press")) score+=35;
+    if(appName.includes("leg extension") && name.includes("leg extension")) score+=35;
+    if(appName.includes("leg curl") && name.includes("leg curl")) score+=35;
+    if(appName.includes("lateral raise") && name.includes("lateral")) score+=30;
+    if(appName.includes("hammer curl") && name.includes("hammer")) score+=30;
+    if(appName.includes("tricep pushdown") && name.includes("pushdown")) score+=30;
+    if(appName.includes("plank") && name.includes("plank")) score+=30;
+
+    return score;
+  }
+
+  async function fetchExerciseSearch(term){
+    const url=`${EXERCISEDB_SEARCH_URL}?search=${encodeURIComponent(term)}`;
+    const response=await fetch(url,{cache:"force-cache"});
+    if(!response.ok) throw new Error(`ExerciseDB ${response.status}`);
+    const payload=await response.json();
+    return Array.isArray(payload?.data) ? payload.data : [];
+  }
+
+  async function fetchOfficialExerciseGif(exercise,{force=false}={}){
+    if(!exercise) return null;
+
+    if(exercise.gifUrl && !force){
+      exerciseGifCache.set(exercise.name,exercise.gifUrl);
+      return exercise.gifUrl;
+    }
+
+    if(!force && exerciseGifCache.has(exercise.name)){
+      return exerciseGifCache.get(exercise.name);
+    }
+
+    const terms=exerciseSearchTerms(exercise);
+    let best=null;
+    let bestScore=-1;
+
+    for(const term of terms){
+      try{
+        const rows=await fetchExerciseSearch(term);
+
+        for(const row of rows){
+          const score=scoreExerciseCandidate(row,term,exercise);
+          if(score>bestScore){
+            best=row;
+            bestScore=score;
+          }
+        }
+
+        // A very strong exact match is enough; avoid unnecessary requests.
+        if(bestScore>=100) break;
+      }catch(err){
+        console.warn(`ExerciseDB search failed for "${term}"`,err);
+      }
+    }
+
+    if(best?.gifUrl && bestScore>=24){
+      exercise.gifUrl=best.gifUrl;
+      exercise.resolvedExerciseName=best.name||exercise.officialName||exercise.name;
+      exerciseGifCache.set(exercise.name,best.gifUrl);
+
+      requestAnimationFrame(()=>{
+        if($("exerciseLibraryList")) renderExerciseLibrary($("exerciseSearch")?.value||"");
+      });
+
+      return best.gifUrl;
+    }
+
+    exerciseGifCache.delete(exercise.name);
+    return null;
+  }
+
+  async function preloadOfficialExerciseGifs(){
+    const queue=[...EXERCISES];
+    const workers=4;
+    let cursor=0;
+    const failed=[];
+
+    async function worker(){
+      while(cursor<queue.length){
+        const ex=queue[cursor++];
+        const gif=await fetchOfficialExerciseGif(ex);
+        if(!gif) failed.push(ex);
+      }
+    }
+
+    await Promise.all(Array.from({length:workers},worker));
+
+    // One delayed retry handles temporary network/CDN/API hiccups.
+    if(failed.length){
+      await new Promise(resolve=>setTimeout(resolve,900));
+      for(const ex of failed){
+        await fetchOfficialExerciseGif(ex,{force:true});
+      }
+    }
+
+    renderExerciseLibrary($("exerciseSearch")?.value||"");
+  }
+
+  function exerciseGifUrl(exerciseName){
+    const exercise=EXERCISES.find(x=>x.name===exerciseName);
+    return exercise?.gifUrl||exerciseGifCache.get(exerciseName)||null;
+  }
+
+  function gifLoadingHTML(exerciseName,message="Loading exercise animation…"){
+    return `<div class="exercise-gif-loading" data-gif-loading="${escapeHTML(exerciseName)}">
+      <div class="text-center px-4">
+        <div class="gif-spinner mx-auto"></div>
+        <p class="mt-3">${escapeHTML(message)}</p>
+      </div>
+    </div>`;
+  }
+
+
+
+  function muscleMapSVG(category){
+    const front=["Chest","Shoulders","Arms","Core"].includes(category);
+    const zones={
+      Chest: front ? '<ellipse cx="50" cy="46" rx="17" ry="9"/>' : '',
+      Shoulders:'<ellipse cx="30" cy="42" rx="8" ry="8"/><ellipse cx="70" cy="42" rx="8" ry="8"/>',
+      Arms:'<rect x="20" y="48" width="8" height="29" rx="4"/><rect x="72" y="48" width="8" height="29" rx="4"/>',
+      Core:'<rect x="42" y="54" width="16" height="31" rx="7"/>',
+      Back:'<path d="M34 43 Q50 35 66 43 L62 76 Q50 83 38 76Z"/>',
+      Legs:'<rect x="36" y="83" width="11" height="52" rx="6"/><rect x="53" y="83" width="11" height="52" rx="6"/>',
+      Cardio:'<path d="M36 43 Q50 35 64 43 L61 83 L64 135 L53 135 L50 89 L47 135 L36 135 L39 83Z"/>'
+    };
+    const active=zones[category]||zones.Cardio;
+    return `<svg viewBox="0 0 100 145" role="img" aria-label="${escapeHTML(category)} target muscles">
+      <defs>
+        <linearGradient id="body3d" x1="0" x2="1"><stop offset="0" stop-color="#55555d"/><stop offset=".5" stop-color="#b4b4bc"/><stop offset="1" stop-color="#44444b"/></linearGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="100" height="145" fill="#101012"/>
+      <circle cx="50" cy="18" r="12" fill="url(#body3d)"/>
+      <path d="M35 34 Q50 27 65 34 L70 77 Q62 87 60 91 L64 136 H53 L50 92 L47 136 H36 L40 91 Q38 87 30 77Z" fill="url(#body3d)"/>
+      <rect x="20" y="37" width="12" height="48" rx="6" fill="url(#body3d)"/><rect x="68" y="37" width="12" height="48" rx="6" fill="url(#body3d)"/>
+      <g fill="#ff453a" opacity=".92" filter="url(#glow)">${active}</g>
+    </svg>`;
+  }
+
+
+  async function handleExerciseGifError(img,exerciseName){
+    if(!img || img.dataset.retrying==="1") return;
+    img.dataset.retrying="1";
+
+    const exercise=EXERCISES.find(x=>x.name===exerciseName);
+    if(!exercise){
+      img.dataset.retrying="0";
+      return;
+    }
+
+    exercise.gifUrl=null;
+    exerciseGifCache.delete(exercise.name);
+
+    const refreshed=await fetchOfficialExerciseGif(exercise,{force:true});
+    if(refreshed){
+      img.dataset.retrying="0";
+      img.src=refreshed;
+      return;
+    }
+
+    // Keep the exercise available. Never swap to an anatomy diagram.
+    const parent=img.parentElement;
+    if(parent){
+      parent.innerHTML=gifLoadingHTML(
+        exercise.name,
+        "Animation is reconnecting — tap to retry."
+      );
+      const state=parent.querySelector(".exercise-gif-loading");
+      if(state){
+        state.style.cursor="pointer";
+        state.addEventListener("click",async()=>{
+          state.innerHTML='<div class="text-center"><div class="gif-spinner mx-auto"></div><p class="mt-3">Retrying animation…</p></div>';
+          const url=await fetchOfficialExerciseGif(exercise,{force:true});
+          if(url) openExercisePreview(exercise.name,exercise.type);
+        });
+      }
+    }
+  }
+
+  window.handleExerciseGifError=handleExerciseGifError;
+
+
+  // ---------- Dynamic workout recommendation engine ----------
+  function currentDailyDeficitTarget(){
+    const sel=$("workoutDeficitTarget");
+    const raw=sel?.value||appData.profile.dailyDeficitTarget||"auto";
+    if(raw!=="auto") return Number(raw)||0;
+    if(appData.profile?.targetDate){
+      const r=evaluateTimeline(appData.profile,appData.profile.targetDate);
+      return Number.isFinite(r.dailyDeficit)?Math.min(900,Math.max(0,Math.round(r.dailyDeficit))):500;
+    }
+    return 500;
+  }
+
+  function exerciseBasePlan(ex){
+    const compounds=["Bench Press (Barbell)","Incline Dumbbell Press","Lat Pulldown","Seated Cable Row","Dumbbell Row","Deadlift","Squat (Barbell)","Leg Press","Romanian Deadlift","Shoulder Press"];
+    if(ex.type==="cardio") return {sets:1,reps:0,minutes:25,compound:false};
+    if(ex.category==="Core") return {sets:3,reps:12,compound:false};
+    if(compounds.includes(ex.name)) return {sets:4,reps:8,compound:true};
+    return {sets:3,reps:12,compound:false};
+  }
+
+  function historicalWeightFor(exerciseName){
+    for(const session of appData.sessions||[]){
+      const ex=(session.exercises||[]).find(e=>e.name===exerciseName&&e.type==="strength");
+      if(!ex) continue;
+      const vals=(ex.sets||[]).filter(s=>s.completed&&Number(s.weight)>0).map(s=>Number(s.weight));
+      if(vals.length) return vals.reduce((a,b)=>a+b,0)/vals.length;
+    }
+    return 0;
+  }
+
+  function recommendationForExercise(ex){
+    const deficit=currentDailyDeficitTarget();
+    const base=exerciseBasePlan(ex);
+    const completed=completedStrengthStats(appData.activeSession).completedSets;
+    const recovery=deficit<=0?1.05:deficit<=250?1:deficit<=500?.95:deficit<=750?.90:.85;
+    const sessionFactor=Math.max(.78,1-completed*.018);
+    const factor=recovery*sessionFactor;
+
+    if(ex.type==="cardio"){
+      const minutes=Math.max(15,Math.round(base.minutes*factor/5)*5);
+      return {text:`${minutes} min steady cardio`,meta:`Adjusted for ${deficit} kcal/day deficit and current session workload.`};
+    }
+
+    const sets=Math.max(2,Math.min(4,Math.round(base.sets*factor)));
+    let reps=base.reps;
+    if(base.compound && deficit>=500) reps=7;
+    if(!base.compound && deficit>=750) reps=10;
+
+    const entered=(ex.sets||[]).map(s=>Number(s.weight)).filter(v=>v>0);
+    const workingWeight=entered.length?entered[0]:historicalWeightFor(ex.name);
+    const targetVolume=workingWeight?Math.round(sets*reps*workingWeight):0;
+    const volumeText=targetVolume?` · target volume ≈ ${targetVolume.toLocaleString()} ${appData.profile.weightUnit}`:" · enter your working weight to calculate volume";
+    return {
+      text:`${sets} sets × ${reps} reps${volumeText}`,
+      meta:`Progressive target recalculates after completed sets. Keep ~2–3 reps in reserve; this is a planning heuristic, not a max-load prescription.`
+    };
+  }
+
+  function refreshRecommendations(){
+    const s=appData.activeSession;
+    if(!s) return;
+    const deficit=currentDailyDeficitTarget();
+    if($("deficitRecommendationHint")) $("deficitRecommendationHint").textContent=`Using approximately ${deficit} kcal/day deficit for recovery-aware volume.`;
+
+    s.exercises.forEach(ex=>{
+      const rec=recommendationForExercise(ex);
+      const el=document.querySelector(`[data-rec-for="${ex.id}"]`);
+      if(el) el.innerHTML=`<strong>Recommended:</strong> ${escapeHTML(rec.text)}<div class="recommendation-meta">${escapeHTML(rec.meta)}</div>`;
+    });
+  }
+
 
   // ---------- Workout ----------
   function ensureDraftSession(){
@@ -1684,6 +2612,7 @@
               </div>
               <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
             </div>
+            <div class="recommendation-card" data-rec-for="${ex.id}"></div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
               <div><label class="text-xs text-zinc-500">Minutes</label><input class="set-input mt-1" type="number" min="1" value="${d.duration??20}" data-cardio="${ex.id}" data-field="duration"></div>
@@ -1707,6 +2636,7 @@
             </div>
             <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
           </div>
+          <div class="recommendation-card" data-rec-for="${ex.id}"></div>
 
           <div class="set-grid mt-5 px-1">
             <div class="text-xs font-bold text-zinc-500 text-center">SET</div>
@@ -1742,6 +2672,7 @@
         set[input.dataset.field]=input.value;
         saveData();
         renderLiveStats();
+        refreshRecommendations();
       });
     });
 
@@ -1764,6 +2695,7 @@
         ex.cardio[input.dataset.field]=input.value;
         saveData();
         renderLiveStats();
+        refreshRecommendations();
       });
     });
 
@@ -1777,6 +2709,7 @@
       });
     });
 
+    refreshRecommendations();
     renderLiveStats();
   }
 
@@ -1806,6 +2739,108 @@
         </div>
       </div>`).join("");
   }
+
+
+  // ---------- Exercise technique preview ----------
+  let previewExerciseState=null;
+
+  function stopPreviewAnimation(){ /* no-op: native GIF animation */ }
+
+  function previewMediaHTML(exercise){
+    const gif=exerciseGifUrl(exercise.name);
+
+    if(!gif){
+      return `<div class="preview-motion-shell">
+        <div class="preview-motion-panel">
+          ${gifLoadingHTML(exercise.name,"Loading ${exercise.name} animation…")}
+        </div>
+      </div>`;
+    }
+
+    return `<div class="preview-motion-shell">
+      <div class="preview-motion-panel">
+        <img id="previewMotionImage"
+             src="${gif}"
+             alt="${escapeHTML(exercise.name)} animated ExerciseDB movement demonstration"
+             loading="eager"
+             decoding="async"
+             onerror="handleExerciseGifError(this,'${escapeHTML(exercise.name)}')">
+        <span class="preview-motion-label">Animated exercise demonstration</span>
+      </div>
+    </div>`;
+  }
+
+  function startPreviewAnimation(){
+    // ExerciseDB supplies an actual animated GIF, so no frame-cycling timer is needed.
+  }
+
+  function recommendationForPreview(exerciseName,type){
+    const category=EXERCISES.find(x=>x.name===exerciseName)?.category || (type==="cardio"?"Cardio":"Arms");
+    const fake={
+      id:"preview",
+      name:exerciseName,
+      type,
+      category,
+      sets:[],
+      cardio:type==="cardio"?{duration:20,speed:3,incline:0,resistance:5,completed:false}:null
+    };
+    return recommendationForExercise(fake);
+  }
+
+  async function openExercisePreview(name,type){
+    const exercise=EXERCISES.find(x=>x.name===name) || {
+      name,
+      type,
+      category:type==="cardio"?"Cardio":"Custom",
+      officialName:name,
+      searchTerms:[name],
+      desc:type==="cardio"
+        ?"Use controlled posture and a sustainable pace appropriate for your fitness level."
+        :"Use a controlled range of motion and a load you can manage with consistent technique."
+    };
+
+    previewExerciseState={name,type};
+
+    $("previewExerciseName").textContent=exercise.name;
+    $("previewExerciseCategory").textContent=exercise.category;
+    $("previewExerciseDescription").textContent=exercise.desc;
+    $("previewExerciseMedia").innerHTML=previewMediaHTML(exercise);
+
+    const rec=recommendationForPreview(name,type);
+    $("previewExerciseRecommendation").innerHTML=
+      `<strong>Session recommendation:</strong> ${escapeHTML(rec.text)}
+       <div class="recommendation-meta">${escapeHTML(rec.meta)}</div>`;
+
+    $("exercisePreviewModal").classList.remove("hidden");
+
+    // Guarantee that the popup seeks the real motion GIF rather than an anatomical substitute.
+    let gif=exerciseGifUrl(exercise.name);
+    if(!gif){
+      gif=await fetchOfficialExerciseGif(exercise,{force:true});
+      if(previewExerciseState?.name!==name) return;
+      $("previewExerciseMedia").innerHTML=previewMediaHTML(exercise);
+    }
+
+    startPreviewAnimation();
+  }
+
+  function closeExercisePreview(){
+    stopPreviewAnimation();
+    previewExerciseState=null;
+    $("exercisePreviewModal").classList.add("hidden");
+  }
+
+  function confirmPreviewExercise(){
+    if(!previewExerciseState) return;
+    const {name,type}=previewExerciseState;
+    stopPreviewAnimation();
+    $("exercisePreviewModal").classList.add("hidden");
+
+    // Add to the planned/active session only after explicit confirmation.
+    addExerciseToSession(name,type);
+    previewExerciseState=null;
+  }
+
 
   // ---------- Library ----------
   function renderCategoryChips(){
@@ -1840,12 +2875,24 @@
           </div>
           <p class="text-xs text-blue-400/80 mt-1">${ex.category}</p>
           <p class="text-sm text-zinc-500 mt-2 leading-relaxed">${escapeHTML(ex.desc)}</p>
+          <div class="mt-3 rounded-xl overflow-hidden border border-white/5 bg-zinc-950">
+            ${exerciseGifUrl(ex.name)
+              ? `<img src="${exerciseGifUrl(ex.name)}"
+                       alt="${escapeHTML(ex.name)} animated ExerciseDB demonstration"
+                       class="exercise-gif-preview"
+                       loading="lazy"
+                       decoding="async"
+                       onerror="handleExerciseGifError(this,'${escapeHTML(ex.name)}')">`
+              : gifLoadingHTML(ex.name)}
+          </div>
         </div>
       </button>
     `).join("") || `<p class="text-sm text-zinc-500 py-8 text-center">No exercises found in this category.</p>`;
 
     $("exerciseLibraryList").querySelectorAll("[data-library-name]").forEach(btn=>{
-      btn.addEventListener("click",()=>addExerciseToSession(btn.dataset.libraryName,btn.dataset.libraryType));
+      btn.addEventListener("click",()=>{
+        openExercisePreview(btn.dataset.libraryName,btn.dataset.libraryType);
+      });
     });
   }
 
@@ -2080,8 +3127,9 @@
       weightDate.min="1900-01-01";
       weightDate.max=todayISO();
       weightDate.value=todayISO();
-      wireNativeDateInput("weightDate","weightDateLocaleHint");
-      setDateLocaleHint("weightDate","weightDateLocaleHint");
+      weightDate.style.colorScheme="dark";
+      weightDate.addEventListener("change",syncWeightDateDisplay);
+      syncWeightDateDisplay();
     }
   }
 
@@ -2210,6 +3258,69 @@
     $("dashboardAutoDateHint").textContent=`Selected date: ${localeDateLabel($("dashboardTargetDate").value)}`;
   });
 
+
+  // Profile edit controls.
+  $("editStartWeightBtn")?.addEventListener("click",()=>{
+    beginInlineTextEdit("startWeightDisplay","editStartWeightBtn",String(appData.profile.startWeight),(v)=>{
+      const n=Number(v);
+      if(!Number.isFinite(n)||n<=0) return;
+
+      // Baseline-only correction:
+      // DO NOT alter any historical weight log entries or Current Weight.
+      appData.profile.startWeight=n;
+      saveProfileAndRefresh();
+    },{type:"number",step:"0.1",min:"1"});
+  });
+
+  $("editNameBtn")?.addEventListener("click",()=>{
+    beginInlineTextEdit("settingsNameValue","editNameBtn",appData.profile.name,(v)=>{
+      appData.profile.name=v; saveProfileAndRefresh();
+    });
+  });
+
+  $("editDobBtn")?.addEventListener("click",beginDobEdit);
+
+  $("editSettingsStartWeightBtn")?.addEventListener("click",()=>{
+    beginInlineTextEdit("settingsStartWeightValue","editSettingsStartWeightBtn",String(appData.profile.startWeight),(v)=>{
+      const n=Number(v);
+      if(!Number.isFinite(n)||n<=0) return;
+
+      // Baseline-only correction:
+      // preserve every daily weight entry exactly as logged.
+      appData.profile.startWeight=n;
+      saveProfileAndRefresh();
+    },{type:"number",step:"0.1",min:"1"});
+  });
+
+  $("workoutDeficitTarget")?.addEventListener("change",()=>{
+    appData.profile.dailyDeficitTarget=$("workoutDeficitTarget").value;
+    saveData();
+    refreshRecommendations();
+  });
+
+  $("weightDate")?.addEventListener("change",syncWeightDateDisplay);
+
+  // Standard keyboard support for set-entry rows.
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape" && !$("exercisePreviewModal")?.classList.contains("hidden")){
+      closeExercisePreview();
+      return;
+    }
+
+    if(e.target?.classList?.contains("set-input")){
+      if(e.key==="Enter"){
+        e.preventDefault();
+        const inputs=[...document.querySelectorAll(".set-input")];
+        const idx=inputs.indexOf(e.target);
+        (inputs[idx+1]||e.target).focus();
+      }else if(e.key==="Escape"){
+        e.preventDefault();
+        e.target.blur();
+      }
+    }
+  });
+
+
   $("heightUnit").addEventListener("change",()=>{toggleHeightInputs();updateOnboardingEstimate();});
   ["currentWeight","goalWeight","heightFeet","heightInches","heightCm","weightUnit","gender"].forEach(id=>{
     $(id).addEventListener("input",updateOnboardingEstimate);
@@ -2247,7 +3358,7 @@
   $("quickWeightBtn").addEventListener("click",()=>{
     $("newWeight").value=weightFromKg(currentWeightKg(),appData.profile.weightUnit).toFixed(1);
     $("weightDate").value=todayISO();
-    setDateLocaleHint("weightDate","weightDateLocaleHint");
+    syncWeightDateDisplay();
     $("weightModal").classList.remove("hidden");
   });
 
@@ -2280,12 +3391,21 @@
   $("addCustomExerciseBtn").addEventListener("click",()=>{
     const name=$("customExerciseName").value.trim();
     if(!name) return;
-    addExerciseToSession(name,$("customExerciseType").value);
+    const type=$("customExerciseType").value;
     $("customExerciseName").value="";
+    openExercisePreview(name,type);
   });
 
+
+  $("closeExercisePreviewBtn")?.addEventListener("click",closeExercisePreview);
+  $("previewBackBtn")?.addEventListener("click",closeExercisePreview);
+  $("previewLogExerciseBtn")?.addEventListener("click",confirmPreviewExercise);
+
   $("closeFinishModalBtn").addEventListener("click",()=> $("finishModal").classList.add("hidden"));
-  $("openSettingsBtn").addEventListener("click",()=> $("settingsModal").classList.remove("hidden"));
+  $("openSettingsBtn").addEventListener("click",()=>{
+    renderDashboard();
+    $("settingsModal").classList.remove("hidden");
+  });
   $("closeSettingsBtn").addEventListener("click",()=> $("settingsModal").classList.add("hidden"));
 
   $("exportBtn").addEventListener("click",()=>{
@@ -2328,6 +3448,7 @@
     if(e.target===$("weightModal")) $("weightModal").classList.add("hidden");
     if(e.target===$("settingsModal")) $("settingsModal").classList.add("hidden");
     if(e.target===$("exerciseModal")) closeExerciseModal();
+    if(e.target===$("exercisePreviewModal")) closeExercisePreview();
     if(e.target===$("finishModal")) $("finishModal").classList.add("hidden");
   });
 
@@ -2335,6 +3456,9 @@
   renderCategoryChips();
   renderExerciseLibrary();
   launch();
+  preloadOfficialExerciseGifs().catch(err=>{
+    console.warn("Exercise GIF preload will retry on demand.",err);
+  });
   wireCompactTargetCalendar();
   syncDashboardTargetDateDisplay();
   initializeResponsiveViews();
