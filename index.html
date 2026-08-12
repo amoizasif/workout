@@ -99,7 +99,7 @@
 
     .set-grid{
       display:grid;
-      grid-template-columns:42px minmax(0,1fr) minmax(0,1fr) 50px;
+      grid-template-columns:42px minmax(0,1fr) minmax(0,1fr) 50px 42px;
       gap:8px;
       align-items:center;
     }
@@ -319,7 +319,7 @@
     }
 
     @media(max-width:430px){
-      .set-grid{grid-template-columns:38px minmax(0,1fr) minmax(0,1fr) 46px;gap:6px}
+      .set-grid{grid-template-columns:38px minmax(0,1fr) minmax(0,1fr) 46px 38px;gap:6px}
       .set-input{height:44px}
       .set-check{width:44px;height:44px}
     }
@@ -933,6 +933,344 @@
       animation-play-state:running;
     }
 
+
+    /* =========================================================
+       THEME SYSTEM
+       ========================================================= */
+    :root{
+      --app-bg:#000000;
+      --app-bg-soft:#0d0d0f;
+      --surface:#111113;
+      --surface-2:#1c1c1e;
+      --surface-3:#202024;
+      --text:#f5f5f7;
+      --text-muted:#8e8e93;
+      --border:rgba(255,255,255,.09);
+      --border-soft:rgba(255,255,255,.06);
+      --accent:#0a84ff;
+      --accent-soft:rgba(10,132,255,.12);
+      --danger:#ff453a;
+      --nav-bg:rgba(12,12,14,.94);
+      --shadow:0 14px 34px rgba(0,0,0,.24);
+    }
+
+    html[data-theme="light"]{
+      --bg-primary:#FDFBF7;
+      --bg-secondary:#F9F6F0;
+      --surface-card:#FFFFFF;
+      --surface-soft:#F3EEE7;
+      --surface-muted:#F0EAE1;
+
+      --accent-sage:#5E8C6A;
+      --accent-sage-soft:rgba(94,140,106,.12);
+      --accent-caramel:#B07244;
+      --accent-caramel-soft:rgba(176,114,68,.12);
+
+      --text-primary:#2B2926;
+      --text-secondary:#5B554F;
+      --text-muted:#756E66;
+
+      --border-warm:#DED5C9;
+      --border-soft:rgba(72,58,44,.10);
+      --nav-bg:rgba(253,251,247,.94);
+      --danger:#B93A32;
+      --shadow:0 14px 34px rgba(74,58,43,.10);
+
+      /* Existing semantic variables mapped to the new palette */
+      --app-bg:var(--bg-primary);
+      --app-bg-soft:var(--bg-secondary);
+      --surface:var(--surface-card);
+      --surface-2:var(--surface-soft);
+      --surface-3:var(--surface-muted);
+      --text:var(--text-primary);
+      --text-muted:#756E66;
+      --border:var(--border-warm);
+      --border-soft:rgba(72,58,44,.10);
+      --accent:var(--accent-sage);
+      --accent-soft:var(--accent-sage-soft);
+    }
+
+    body{
+      background:var(--app-bg) !important;
+      color:var(--text) !important;
+      transition:background-color .22s ease,color .22s ease;
+    }
+
+    html[data-theme="light"] .surface,
+    html[data-theme="light"] .card,
+    html[data-theme="light"] .onboard-card,
+    html[data-theme="light"] .exercise-card,
+    html[data-theme="light"] .workout-card,
+    html[data-theme="light"] .deficit-control{
+      background:var(--surface) !important;
+      border-color:var(--border) !important;
+      color:var(--text) !important;
+      box-shadow:var(--shadow);
+    }
+
+    html[data-theme="light"] .soft-input,
+    html[data-theme="light"] .native-date-input,
+    html[data-theme="light"] .onboard-input,
+    html[data-theme="light"] .onboard-select,
+    html[data-theme="light"] .inline-edit-input,
+    html[data-theme="light"] .compact-date-display,
+    html[data-theme="light"] .mini-date-display,
+    html[data-theme="light"] input,
+    html[data-theme="light"] select,
+    html[data-theme="light"] textarea{
+      background:var(--surface-2) !important;
+      color:var(--text) !important;
+      border-color:var(--border) !important;
+    }
+
+    html[data-theme="light"] .text-zinc-100,
+    html[data-theme="light"] .text-zinc-200,
+    html[data-theme="light"] .text-zinc-300,
+    html[data-theme="light"] .text-white{
+      color:var(--text) !important;
+    }
+
+    html[data-theme="light"] .text-zinc-400,
+    html[data-theme="light"] .text-zinc-500,
+    html[data-theme="light"] .text-zinc-600{
+      color:var(--text-muted) !important;
+    }
+
+    html[data-theme="light"] .bg-zinc-900,
+    html[data-theme="light"] .bg-zinc-900\/70,
+    html[data-theme="light"] .bg-zinc-900\/80,
+    html[data-theme="light"] .bg-zinc-950{
+      background:var(--surface-2) !important;
+    }
+
+    html[data-theme="light"] .modal-backdrop{
+      background:rgba(0,0,0,.32) !important;
+    }
+
+    html[data-theme="light"] .mobile-bottom-nav{
+      background:var(--nav-bg);
+      border-top-color:var(--border);
+    }
+
+    html[data-theme="light"] .mobile-nav-btn{ color:#6e6e73; }
+    html[data-theme="light"] .mobile-nav-btn.active{
+      color:var(--accent);
+      background:var(--accent-soft);
+    }
+
+    .exercise-collapse-btn{
+      width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+      color:var(--text-muted);background:var(--surface-3);border:1px solid var(--border-soft);flex:0 0 auto;
+    }
+    .exercise-collapse-btn svg{width:17px;height:17px;stroke:currentColor;transition:transform .18s ease}
+    .exercise-collapse-btn[aria-expanded="false"] svg{transform:rotate(-90deg)}
+    .exercise-card-body{overflow:hidden;max-height:2400px;opacity:1;transition:max-height .2s ease,opacity .18s ease}
+    .exercise-card-body.is-collapsed{max-height:0;opacity:0;pointer-events:none}
+    .exercise-summary{font-size:12px;color:var(--text-muted);margin-top:3px}
+
+    .set-delete-btn{
+      width:32px;height:32px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;
+      color:#ff6961;background:rgba(255,69,58,.08);border:1px solid rgba(255,69,58,.14);
+    }
+    .set-delete-btn svg{width:15px;height:15px;stroke:currentColor}
+
+    .settings-segment{
+      display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:14px;
+      background:var(--surface-2);border:1px solid var(--border-soft);
+    }
+    .settings-segment button{
+      min-height:40px;border-radius:10px;color:var(--text-muted);font-size:13px;font-weight:700;
+    }
+    .settings-segment button.active{background:var(--accent);color:#fff}
+
+    .theme-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .theme-toggle{
+      position:relative;width:54px;height:30px;border-radius:999px;background:var(--surface-3);
+      border:1px solid var(--border);flex:0 0 auto;
+    }
+    .theme-toggle::after{
+      content:"";position:absolute;width:24px;height:24px;top:2px;left:3px;border-radius:50%;
+      background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .18s ease;
+    }
+    .theme-toggle[aria-checked="true"]{background:var(--accent)}
+    .theme-toggle[aria-checked="true"]::after{transform:translateX(23px)}
+
+
+    html[data-theme="dark"]{
+      color-scheme:dark;
+    }
+
+    html[data-theme="light"]{
+      color-scheme:light;
+    }
+
+
+    /* =========================================================
+       LIGHT THEME · CREAM / SAGE / CARAMEL
+       ========================================================= */
+    html[data-theme="light"] body{
+      background:
+        radial-gradient(circle at 12% 0%, rgba(94,140,106,.07), transparent 28%),
+        radial-gradient(circle at 88% 10%, rgba(176,114,68,.06), transparent 24%),
+        var(--bg-primary) !important;
+      color:var(--text-primary) !important;
+    }
+
+    html[data-theme="light"] .surface,
+    html[data-theme="light"] .card,
+    html[data-theme="light"] .onboard-card,
+    html[data-theme="light"] .exercise-card,
+    html[data-theme="light"] .workout-card,
+    html[data-theme="light"] .deficit-control{
+      background:var(--surface-card) !important;
+      border-color:var(--border-warm) !important;
+      color:var(--text-primary) !important;
+      box-shadow:0 10px 28px rgba(74,58,43,.07);
+    }
+
+    html[data-theme="light"] .soft-input,
+    html[data-theme="light"] .native-date-input,
+    html[data-theme="light"] .onboard-input,
+    html[data-theme="light"] .onboard-select,
+    html[data-theme="light"] .inline-edit-input,
+    html[data-theme="light"] .compact-date-display,
+    html[data-theme="light"] .mini-date-display,
+    html[data-theme="light"] input,
+    html[data-theme="light"] select,
+    html[data-theme="light"] textarea{
+      background:var(--surface-soft) !important;
+      color:var(--text-primary) !important;
+      border-color:var(--border-warm) !important;
+    }
+
+    html[data-theme="light"] input::placeholder,
+    html[data-theme="light"] textarea::placeholder{
+      color:#9A9188 !important;
+    }
+
+    html[data-theme="light"] .text-zinc-100,
+    html[data-theme="light"] .text-zinc-200,
+    html[data-theme="light"] .text-zinc-300,
+    html[data-theme="light"] .text-white{
+      color:var(--text-primary) !important;
+    }
+
+    html[data-theme="light"] .text-zinc-400{
+      color:var(--text-secondary) !important;
+    }
+
+    html[data-theme="light"] .text-zinc-500,
+    html[data-theme="light"] .text-zinc-600{
+      color:var(--text-muted) !important;
+    }
+
+    html[data-theme="light"] .bg-zinc-900,
+    html[data-theme="light"] .bg-zinc-900\/70,
+    html[data-theme="light"] .bg-zinc-900\/80,
+    html[data-theme="light"] .bg-zinc-950{
+      background:var(--surface-soft) !important;
+    }
+
+    html[data-theme="light"] .btn-primary,
+    html[data-theme="light"] .mobile-nav-btn.active,
+    html[data-theme="light"] .settings-segment button.active{
+      background:var(--accent-sage) !important;
+      color:#fff !important;
+      border-color:var(--accent-sage) !important;
+    }
+
+    html[data-theme="light"] .btn-primary:hover{
+      filter:brightness(.96);
+    }
+
+    html[data-theme="light"] .text-blue-400,
+    html[data-theme="light"] .text-blue-400\/80,
+    html[data-theme="light"] .recommendation-card strong{
+      color:var(--accent-sage) !important;
+    }
+
+    html[data-theme="light"] .recommendation-card{
+      background:var(--accent-sage-soft) !important;
+      border-color:rgba(94,140,106,.24) !important;
+    }
+
+    html[data-theme="light"] .motion-badge,
+    html[data-theme="light"] .preview-motion-label{
+      background:rgba(43,41,38,.78) !important;
+      color:#fff !important;
+    }
+
+    html[data-theme="light"] .badge,
+    html[data-theme="light"] .chip,
+    html[data-theme="light"] [class*="badge"]{
+      border-color:rgba(176,114,68,.24);
+    }
+
+    html[data-theme="light"] .mobile-bottom-nav{
+      background:var(--nav-bg) !important;
+      border-top-color:var(--border-warm) !important;
+    }
+
+    html[data-theme="light"] .mobile-nav-btn{
+      color:var(--text-muted) !important;
+    }
+
+    html[data-theme="light"] .mobile-nav-btn.active{
+      background:var(--accent-sage-soft) !important;
+      color:var(--accent-sage) !important;
+    }
+
+    html[data-theme="light"] .theme-toggle[aria-checked="true"]{
+      background:var(--accent-sage) !important;
+    }
+
+    html[data-theme="light"] .exercise-collapse-btn,
+    html[data-theme="light"] .edit-pencil{
+      background:var(--surface-muted) !important;
+      color:var(--text-secondary) !important;
+      border-color:var(--border-warm) !important;
+    }
+
+    html[data-theme="light"] .set-delete-btn{
+      color:#B93A32 !important;
+      background:rgba(185,58,50,.07) !important;
+      border-color:rgba(185,58,50,.16) !important;
+    }
+
+    html[data-theme="light"] .btn-secondary{
+      background:var(--surface-muted) !important;
+      color:var(--text-primary) !important;
+      border-color:var(--border-warm) !important;
+    }
+
+    html[data-theme="light"] .btn-green{
+      background:var(--accent-sage) !important;
+      color:#fff !important;
+      border-color:var(--accent-sage) !important;
+    }
+
+    html[data-theme="light"] .exercise-summary,
+    html[data-theme="light"] .recommendation-meta{
+      color:var(--text-muted) !important;
+    }
+
+    html[data-theme="light"] .metric-card,
+    html[data-theme="light"] .timeline-option{
+      background:var(--surface-card) !important;
+      border-color:var(--border-warm) !important;
+    }
+
+    html[data-theme="light"] .timeline-option.selected,
+    html[data-theme="light"] .active-option{
+      border-color:var(--accent-sage) !important;
+      box-shadow:0 0 0 3px var(--accent-sage-soft) !important;
+    }
+
+    html[data-theme="light"] .caramel-accent,
+    html[data-theme="light"] .secondary-highlight{
+      color:var(--accent-caramel) !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1423,6 +1761,25 @@
           <h2 class="text-2xl font-semibold">Settings</h2>
         </div>
         <button id="closeSettingsBtn" class="btn btn-secondary py-2 px-3">Close</button>
+      </div>
+
+      <div class="mt-6 rounded-2xl bg-zinc-900/70 border border-white/5 p-4 space-y-5">
+        <div>
+          <p class="text-sm font-semibold">Weight unit</p>
+          <p class="text-xs text-zinc-500 mt-1 mb-3">Updates displayed weights and workout entries.</p>
+          <div class="settings-segment" role="group" aria-label="Weight unit">
+            <button id="settingsUnitLbBtn" type="button">Pounds · lb</button>
+            <button id="settingsUnitKgBtn" type="button">Kilograms · kg</button>
+          </div>
+        </div>
+
+        <div class="theme-toggle-row">
+          <div>
+            <p class="text-sm font-semibold">Light theme</p>
+            <p class="text-xs text-zinc-500 mt-1">Switch between dark and light appearance.</p>
+          </div>
+          <button id="themeToggleBtn" type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Toggle light theme"></button>
+        </div>
       </div>
 
       <div class="mt-6 rounded-2xl bg-zinc-900/70 border border-white/5 px-4">
@@ -1949,6 +2306,101 @@
     if(!native || !display) return;
 
     display.value = native.value ? localeDateLabel(native.value) : "";
+  }
+
+
+  // ---------- Units / theme ----------
+  function convertWeightValue(value,fromUnit,toUnit){
+    const n=Number(value);
+    if(!Number.isFinite(n)) return value;
+    if(fromUnit===toUnit) return n;
+    return fromUnit==="lb" ? n/2.20462 : n*2.20462;
+  }
+
+  function roundWeightForUnit(value){
+    const n=Number(value);
+    return Number.isFinite(n)?Number(n.toFixed(1)):value;
+  }
+
+  function convertSessionExerciseWeights(session,fromUnit,toUnit){
+    if(!session?.exercises) return;
+    session.exercises.forEach(ex=>{
+      if(ex.type!=="strength") return;
+      (ex.sets||[]).forEach(set=>{
+        if(set.weight!=="" && set.weight!=null && Number.isFinite(Number(set.weight))){
+          set.weight=roundWeightForUnit(convertWeightValue(set.weight,fromUnit,toUnit));
+        }
+      });
+    });
+  }
+
+  function changeWeightUnit(nextUnit){
+    const p=appData.profile;
+    if(!p || !["lb","kg"].includes(nextUnit)) return;
+    const previous=p.weightUnit||"lb";
+    if(previous===nextUnit) return;
+
+    p.startWeight=roundWeightForUnit(convertWeightValue(p.startWeight,previous,nextUnit));
+    p.goalWeight=roundWeightForUnit(convertWeightValue(p.goalWeight,previous,nextUnit));
+
+    // Daily weights remain canonical in weightKg, so history/current values are preserved.
+    convertSessionExerciseWeights(appData.activeSession,previous,nextUnit);
+    (appData.sessions||[]).forEach(session=>convertSessionExerciseWeights(session,previous,nextUnit));
+
+    p.weightUnit=nextUnit;
+    saveData();
+    renderDashboard();
+    renderChart();
+    renderActiveSession();
+    renderWorkoutHistory();
+    renderLiveStats();
+    renderSettingsPreferences();
+  }
+
+  function applyTheme(theme,{persist=true}={}){
+    const next=theme==="light"?"light":"dark";
+
+    // IMPORTANT:
+    // Theme changes are style-only. Do not rebuild or re-render any
+    // application container here, because doing so would replace DOM nodes
+    // that currently own active workout event listeners.
+    document.documentElement.dataset.theme=next;
+    document.documentElement.classList.toggle("dark",next==="dark");
+    document.documentElement.classList.toggle("light",next==="light");
+
+    appData.theme=next;
+
+    if(persist){
+      try{
+        localStorage.setItem("fitnessAppTheme",next);
+      }catch{}
+      saveData();
+    }
+
+    // Only update the switch's visual/ARIA state in place.
+    const toggle=document.getElementById("themeToggleBtn");
+    if(toggle){
+      toggle.setAttribute("aria-checked",String(next==="light"));
+    }
+  }
+
+  function renderSettingsPreferences(){
+    if(!appData.profile) return;
+
+    const unit=appData.profile.weightUnit||"lb";
+    const lbBtn=document.getElementById("settingsUnitLbBtn");
+    const kgBtn=document.getElementById("settingsUnitKgBtn");
+    const toggle=document.getElementById("themeToggleBtn");
+
+    lbBtn?.classList.toggle("active",unit==="lb");
+    kgBtn?.classList.toggle("active",unit==="kg");
+
+    if(toggle){
+      toggle.setAttribute(
+        "aria-checked",
+        String((document.documentElement.dataset.theme||appData.theme||"dark")==="light")
+      );
+    }
   }
 
   // ---------- Dashboard ----------
@@ -2610,8 +3062,15 @@
                 <h3 class="text-xl font-bold text-blue-400">${escapeHTML(ex.name)}</h3>
                 <p class="text-xs text-zinc-600 mt-1">Cardio / Machine</p>
               </div>
-              <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
+              <div class="flex items-center gap-2">
+                <button class="exercise-collapse-btn" type="button" data-collapse-ex="${ex.id}" aria-expanded="${ex.collapsed?false:true}" aria-label="Collapse ${escapeHTML(ex.name)}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+                </button>
+                <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
+              </div>
             </div>
+            <div class="exercise-summary">${ex.cardio?.completed?"Cardio completed":"Cardio planned"}</div>
+            <div class="exercise-card-body ${ex.collapsed?"is-collapsed":""}">
             <div class="recommendation-card" data-rec-for="${ex.id}"></div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
@@ -2624,6 +3083,7 @@
             <button class="mt-4 btn ${d.completed?"btn-green":"btn-secondary"} w-full" data-cardio-complete="${ex.id}">
               ${d.completed?"✓ Cardio Completed":"Mark Cardio Complete"}
             </button>
+            </div>
           </div>`;
       }
 
@@ -2634,8 +3094,15 @@
               <h3 class="text-xl font-bold text-blue-400">${escapeHTML(ex.name)}</h3>
               <p class="text-xs text-zinc-600 mt-1">Resistance / Strength</p>
             </div>
-            <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
+            <div class="flex items-center gap-2">
+              <button class="exercise-collapse-btn" type="button" data-collapse-ex="${ex.id}" aria-expanded="${ex.collapsed?false:true}" aria-label="Collapse ${escapeHTML(ex.name)}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+              <button class="delete-x" data-remove-ex="${ex.id}" aria-label="Remove ${escapeHTML(ex.name)}">×</button>
+            </div>
           </div>
+          <div class="exercise-summary">${(ex.sets||[]).filter(s=>s.completed).length} of ${(ex.sets||[]).length} sets completed</div>
+          <div class="exercise-card-body ${ex.collapsed?"is-collapsed":""}">
           <div class="recommendation-card" data-rec-for="${ex.id}"></div>
 
           <div class="set-grid mt-5 px-1">
@@ -2643,6 +3110,7 @@
             <div class="text-xs font-bold text-zinc-500 text-center">${appData.profile.weightUnit==="kg"?"KG":"LBS"}</div>
             <div class="text-xs font-bold text-zinc-500 text-center">REPS</div>
             <div class="text-xs font-bold text-zinc-500 text-center">✓</div>
+            <div class="text-xs font-bold text-zinc-500 text-center">DEL</div>
           </div>
 
           <div class="mt-2 space-y-2">
@@ -2654,10 +3122,19 @@
                 <input class="set-input" inputmode="numeric" type="number" min="0" step="1" value="${escapeHTML(set.reps)}" placeholder="0"
                   data-set-input="${ex.id}" data-set-id="${set.id}" data-field="reps">
                 <button class="set-check ${set.completed?"done":""}" data-set-check="${ex.id}" data-set-id="${set.id}">✓</button>
+                <button class="set-delete-btn" type="button" data-delete-set="${ex.id}:${set.id}" aria-label="Delete set ${idx+1}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"></path>
+                    <path d="M8 6V4h8v2"></path>
+                    <path d="M19 6l-1 14H6L5 6"></path>
+                    <path d="M10 11v5M14 11v5"></path>
+                  </svg>
+                </button>
               </div>`).join("")}
           </div>
 
           <button class="btn btn-secondary w-full mt-3" data-add-set="${ex.id}">+ Add Set</button>
+          </div>
         </div>`;
     }).join("");
 
@@ -3245,6 +3722,41 @@
     },{passive:true});
   }
 
+
+  // ---------- Dynamic workout control safety net ----------
+  // These delegated handlers survive DOM updates because they are attached
+  // once to document rather than to individual transient set/card elements.
+  document.addEventListener("click",e=>{
+    const collapseBtn=e.target.closest?.("[data-collapse-ex]");
+    if(collapseBtn){
+      const s=appData.activeSession;
+      const ex=s?.exercises?.find(x=>x.id===collapseBtn.dataset.collapseEx);
+      if(ex){
+        ex.collapsed=!ex.collapsed;
+        saveData();
+        renderActiveSession();
+      }
+      return;
+    }
+
+    const deleteSetBtn=e.target.closest?.("[data-delete-set]");
+    if(deleteSetBtn){
+      const s=appData.activeSession;
+      if(!s) return;
+
+      const [exId,setId]=deleteSetBtn.dataset.deleteSet.split(":");
+      const ex=s.exercises.find(x=>x.id===exId);
+      if(ex?.type==="strength"){
+        ex.sets=(ex.sets||[]).filter(set=>String(set.id)!==String(setId));
+        saveData();
+        renderActiveSession();
+        renderLiveStats();
+        refreshRecommendations();
+      }
+      return;
+    }
+  });
+
   // ---------- Events ----------
   document.addEventListener("splitdatechange",e=>{
     if(e.detail.id==="dob" || e.detail.id==="targetDate") updateOnboardingEstimate();
@@ -3320,6 +3832,14 @@
     }
   });
 
+
+
+  $("settingsUnitLbBtn")?.addEventListener("click",()=>changeWeightUnit("lb"));
+  $("settingsUnitKgBtn")?.addEventListener("click",()=>changeWeightUnit("kg"));
+  $("themeToggleBtn")?.addEventListener("click",()=>{
+    const current=document.documentElement.dataset.theme||appData.theme||"dark";
+    applyTheme(current==="dark"?"light":"dark");
+  });
 
   $("heightUnit").addEventListener("change",()=>{toggleHeightInputs();updateOnboardingEstimate();});
   ["currentWeight","goalWeight","heightFeet","heightInches","heightCm","weightUnit","gender"].forEach(id=>{
@@ -3404,6 +3924,7 @@
   $("closeFinishModalBtn").addEventListener("click",()=> $("finishModal").classList.add("hidden"));
   $("openSettingsBtn").addEventListener("click",()=>{
     renderDashboard();
+    renderSettingsPreferences();
     $("settingsModal").classList.remove("hidden");
   });
   $("closeSettingsBtn").addEventListener("click",()=> $("settingsModal").classList.add("hidden"));
@@ -3455,7 +3976,17 @@
   toggleHeightInputs();
   renderCategoryChips();
   renderExerciseLibrary();
+  let initialTheme=appData.theme||"dark";
+  try{
+    initialTheme=localStorage.getItem("fitnessAppTheme")||initialTheme;
+  }catch{}
+
+  // Apply theme before the application initializes.
+  // persist:false avoids unnecessary state writes during startup.
+  applyTheme(initialTheme,{persist:false});
+
   launch();
+  renderSettingsPreferences();
   preloadOfficialExerciseGifs().catch(err=>{
     console.warn("Exercise GIF preload will retry on demand.",err);
   });
