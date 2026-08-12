@@ -11,6 +11,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
@@ -1271,9 +1272,119 @@
       color:var(--accent-caramel) !important;
     }
 
+    /* =========================================================
+       SUPABASE AUTH / CLOUD ACCOUNT
+       ========================================================= */
+    .auth-shell{
+      position:fixed;inset:0;z-index:100;background:
+        radial-gradient(circle at 15% 0%,rgba(10,132,255,.12),transparent 28rem),
+        radial-gradient(circle at 100% 18%,rgba(48,209,88,.08),transparent 25rem),
+        var(--app-bg,#000);
+      overflow-y:auto;
+    }
+    .auth-wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+    .auth-card{width:100%;max-width:460px;border-radius:28px;padding:26px}
+    .auth-brand{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent,#0a84ff)}
+    .auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:14px;background:var(--surface-2,#1c1c1e);border:1px solid var(--border-soft)}
+    .auth-tabs button{min-height:42px;border-radius:10px;color:var(--text-muted);font-size:14px;font-weight:750}
+    .auth-tabs button.active{background:var(--accent,#0a84ff);color:#fff}
+    .oauth-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .oauth-btn{display:flex;align-items:center;justify-content:center;gap:9px}
+    .auth-divider{display:flex;align-items:center;gap:12px;color:var(--text-muted);font-size:12px}
+    .auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:var(--border-soft)}
+    .auth-message{display:none;margin-top:12px;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.45}
+    .auth-message.show{display:block}
+    .auth-message.error{background:rgba(255,69,58,.10);border:1px solid rgba(255,69,58,.20);color:#ff817a}
+    .auth-message.success{background:rgba(48,209,88,.10);border:1px solid rgba(48,209,88,.20);color:#70e18d}
+    .cloud-state{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted)}
+    .cloud-dot{width:8px;height:8px;border-radius:50%;background:#777}
+    .cloud-dot.syncing{background:#ff9f0a}.cloud-dot.saved{background:#30d158}.cloud-dot.error{background:#ff453a}
+    .account-panel{border-radius:16px;background:var(--surface-2);border:1px solid var(--border-soft);padding:14px}
+    .account-email{font-size:13px;color:var(--text-muted);word-break:break-all}
+    html[data-theme="light"] .auth-shell{
+      background:
+        radial-gradient(circle at 12% 0%,rgba(94,140,106,.08),transparent 28%),
+        radial-gradient(circle at 88% 10%,rgba(176,114,68,.06),transparent 24%),
+        var(--bg-primary)!important;
+    }
+    html[data-theme="light"] .auth-card{background:var(--surface-card)!important;border-color:var(--border-warm)!important}
+    html[data-theme="light"] .auth-message.success{color:#3f714c}
+    @media(max-width:520px){.oauth-grid{grid-template-columns:1fr}.auth-card{padding:22px 18px}}
+
   </style>
 </head>
 <body>
+
+
+<!-- SUPABASE AUTH -->
+<div id="authShell" class="auth-shell hidden">
+  <div class="auth-wrap safe-top">
+    <div class="surface auth-card">
+      <div class="text-center">
+        <p class="auth-brand">WEIGHT LOSS JOURNEY</p>
+        <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mt-2">Your progress, everywhere.</h1>
+        <p class="text-zinc-400 mt-3 text-sm">Sign in to securely sync your profile, weights and workouts across devices.</p>
+      </div>
+
+      <div class="auth-tabs mt-6">
+        <button id="authSignInTab" type="button" class="active">Sign in</button>
+        <button id="authSignUpTab" type="button">Create account</button>
+      </div>
+
+      <form id="authForm" class="mt-5 space-y-3">
+        <div id="authNameWrap" class="hidden">
+          <label class="block text-sm font-medium mb-2" for="authName">Name</label>
+          <input id="authName" type="text" class="soft-input" autocomplete="name" placeholder="Your name">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2" for="authEmail">Email</label>
+          <input id="authEmail" type="email" class="soft-input" autocomplete="email" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-2" for="authPassword">Password</label>
+          <input id="authPassword" type="password" class="soft-input" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required>
+        </div>
+        <div id="authConfirmWrap" class="hidden">
+          <label class="block text-sm font-medium mb-2" for="authConfirmPassword">Confirm password</label>
+          <input id="authConfirmPassword" type="password" class="soft-input" autocomplete="new-password" minlength="6" placeholder="Repeat password">
+        </div>
+        <button id="authSubmitBtn" type="submit" class="btn btn-primary w-full">Sign in</button>
+      </form>
+
+      <button id="forgotPasswordBtn" type="button" class="w-full text-center text-sm text-blue-400 font-semibold mt-3">Forgot password?</button>
+
+      <div class="auth-divider my-5">OR CONTINUE WITH</div>
+      <div class="oauth-grid">
+        <button id="googleSignInBtn" type="button" class="btn btn-secondary oauth-btn">
+          <span aria-hidden="true">G</span><span>Google</span>
+        </button>
+        <button id="githubSignInBtn" type="button" class="btn btn-secondary oauth-btn">
+          <span aria-hidden="true">⌘</span><span>GitHub</span>
+        </button>
+      </div>
+
+      <div id="authMessage" class="auth-message"></div>
+      <p class="text-xs text-zinc-500 text-center mt-5">Cloud data is isolated per signed-in account using your Supabase Row Level Security policies.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD RECOVERY -->
+<div id="recoveryModal" class="hidden fixed inset-0 z-[110] modal-backdrop">
+  <div class="min-h-full flex items-center justify-center p-4">
+    <div class="surface card w-full max-w-md p-5 sm:p-6">
+      <h2 class="text-2xl font-semibold">Choose a new password</h2>
+      <p class="text-sm text-zinc-500 mt-2">Enter your new password to finish account recovery.</p>
+      <form id="recoveryForm" class="mt-5 space-y-3">
+        <input id="recoveryPassword" type="password" class="soft-input" minlength="6" placeholder="New password" required>
+        <input id="recoveryPasswordConfirm" type="password" class="soft-input" minlength="6" placeholder="Confirm new password" required>
+        <button class="btn btn-primary w-full">Update password</button>
+      </form>
+      <div id="recoveryMessage" class="auth-message"></div>
+    </div>
+  </div>
+</div>
+
 
 <main id="appShell" class="safe-top max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 hidden">
   <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between py-6 sm:py-9">
@@ -1535,7 +1646,7 @@
   </nav>
 
   <footer class="py-8 text-center text-xs sm:text-sm text-zinc-600">
-    Calorie and timeline values are estimates for planning. Your data stays in this browser.
+    Calorie and timeline values are estimates for planning. Signed-in data syncs securely with your cloud account.
   </footer>
 </main>
 
@@ -1546,7 +1657,7 @@
       <div class="text-center mb-7">
         <p class="text-sm font-bold text-blue-400 tracking-[.18em]">GET STARTED</p>
         <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight mt-2">Set up your journey</h1>
-        <p class="text-zinc-400 mt-3">Your profile and logs remain stored locally on this device.</p>
+        <p class="text-zinc-400 mt-3">Your profile and logs will sync securely to your signed-in account.</p>
       </div>
 
       <div class="onboard-card">
@@ -1818,6 +1929,21 @@
         </div>
       </div>
 
+
+      <div class="mt-6 account-panel">
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold">Cloud account</p>
+            <p id="accountEmail" class="account-email mt-1">--</p>
+            <div class="cloud-state mt-2">
+              <span id="cloudStatusDot" class="cloud-dot"></span>
+              <span id="cloudStatusText">Checking cloud sync…</span>
+            </div>
+          </div>
+          <button id="signOutBtn" type="button" class="btn btn-secondary py-2 px-3 shrink-0">Sign out</button>
+        </div>
+      </div>
+
       <div class="mt-6 space-y-3">
         <button id="exportBtn" class="btn btn-secondary w-full">Export backup</button>
         <label class="btn btn-secondary w-full block text-center cursor-pointer">
@@ -1833,6 +1959,18 @@
 <script>
 (() => {
   const STORAGE_KEY = "weightLossJourney_v1";
+  const SUPABASE_URL = "https://mdsgmeekuknzkighzpzt.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g5bbDX9hkqnbox_IZXM_YA_CH3qVm0C";
+  const CLOUD_TABLE = "workout";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+    auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:true }
+  });
+  let currentUser = null;
+  let authMode = "signin";
+  let cloudSaveTimer = null;
+  let cloudSaveInFlight = false;
+  let cloudSaveQueued = false;
+
   let chart = null;
   let timerInterval = null;
   let selectedCategory = "All";
@@ -2077,26 +2215,25 @@
 
   function freshData(){ return JSON.parse(JSON.stringify(defaultData)); }
 
-  function loadData(){
+  function loadLocalData(){
     try{
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw) return freshData();
-
       const parsed = JSON.parse(raw);
-      if(!parsed || !parsed.profile) return freshData();
-
+      if(!parsed || typeof parsed!=="object") return freshData();
       return {
-        profile: parsed.profile,
+        profile: parsed.profile || null,
         weights: Array.isArray(parsed.weights) ? parsed.weights : [],
         sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
-        activeSession: parsed.activeSession || null
+        activeSession: parsed.activeSession || null,
+        theme: parsed.theme || undefined
       };
     }catch{
       return freshData();
     }
   }
 
-  let appData = loadData();
+  let appData = loadLocalData();
 
   // Backward-compatible normalization for profiles created by earlier builds.
   if(appData.profile){
@@ -2115,7 +2252,91 @@
     }
   }
 
-  function saveData(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(appData)); }
+  function setCloudStatus(state,text){
+    const dot=$("cloudStatusDot"), label=$("cloudStatusText");
+    if(dot){
+      dot.className="cloud-dot";
+      if(state) dot.classList.add(state);
+    }
+    if(label) label.textContent=text;
+  }
+
+  function cacheLocalData(){
+    try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(appData)); }catch{}
+  }
+
+  async function persistCloudData(){
+    if(!currentUser) return;
+    if(cloudSaveInFlight){ cloudSaveQueued=true; return; }
+
+    cloudSaveInFlight=true;
+    setCloudStatus("syncing","Saving to cloud…");
+    try{
+      const { error } = await supabaseClient
+        .from(CLOUD_TABLE)
+        .upsert({
+          user_id: currentUser.id,
+          data: appData,
+          updated_at: new Date().toISOString()
+        }, { onConflict:"user_id" });
+
+      if(error) throw error;
+      setCloudStatus("saved","Saved to cloud");
+    }catch(err){
+      console.error("Cloud save failed",err);
+      setCloudStatus("error","Cloud save failed — local cache preserved");
+    }finally{
+      cloudSaveInFlight=false;
+      if(cloudSaveQueued){
+        cloudSaveQueued=false;
+        persistCloudData();
+      }
+    }
+  }
+
+  function saveData(){
+    // Keep a fast local cache for offline resilience, while Supabase is the
+    // cross-device source of truth for signed-in users.
+    cacheLocalData();
+    if(!currentUser) return;
+    clearTimeout(cloudSaveTimer);
+    cloudSaveTimer=setTimeout(()=>persistCloudData(),300);
+  }
+
+  async function loadCloudDataForUser(user){
+    const { data, error } = await supabaseClient
+      .from(CLOUD_TABLE)
+      .select("data")
+      .eq("user_id",user.id)
+      .maybeSingle();
+
+    if(error) throw error;
+    return data?.data || null;
+  }
+
+  async function ensureCloudData(user){
+    const cloudData = await loadCloudDataForUser(user);
+    if(cloudData){
+      appData={
+        profile:cloudData.profile||null,
+        weights:Array.isArray(cloudData.weights)?cloudData.weights:[],
+        sessions:Array.isArray(cloudData.sessions)?cloudData.sessions:[],
+        activeSession:cloudData.activeSession||null,
+        theme:cloudData.theme||appData.theme
+      };
+      cacheLocalData();
+      return "cloud";
+    }
+
+    // First login on a device with existing local data: migrate it automatically
+    // into this user's new cloud row. If there is no local profile, onboarding
+    // will create the first cloud record.
+    if(appData.profile){
+      await persistCloudData();
+      return "migrated";
+    }
+    return "new";
+  }
 
   function escapeHTML(v){
     return String(v ?? "")
@@ -2216,6 +2437,155 @@
       status,label,requiredLb,requiredKg,dailyDeficit,
       revisedDate:addDays(new Date(),Math.ceil((remainingLb/1.5)*7))
     };
+  }
+
+
+  // ---------- Supabase authentication ----------
+  function appRedirectUrl(){
+    return `${window.location.origin}${window.location.pathname}`;
+  }
+
+  function showAuthMessage(message,type="error"){
+    const el=$("authMessage");
+    if(!el) return;
+    el.textContent=message;
+    el.className=`auth-message show ${type}`;
+  }
+
+  function clearAuthMessage(){
+    const el=$("authMessage");
+    if(!el) return;
+    el.textContent="";
+    el.className="auth-message";
+  }
+
+  function setAuthMode(mode){
+    authMode=mode==="signup"?"signup":"signin";
+    $("authSignInTab")?.classList.toggle("active",authMode==="signin");
+    $("authSignUpTab")?.classList.toggle("active",authMode==="signup");
+    $("authNameWrap")?.classList.toggle("hidden",authMode!=="signup");
+    $("authConfirmWrap")?.classList.toggle("hidden",authMode!=="signup");
+    if($("authPassword")) $("authPassword").autocomplete=authMode==="signup"?"new-password":"current-password";
+    if($("authSubmitBtn")) $("authSubmitBtn").textContent=authMode==="signup"?"Create account":"Sign in";
+    if($("forgotPasswordBtn")) $("forgotPasswordBtn").classList.toggle("hidden",authMode==="signup");
+    clearAuthMessage();
+  }
+
+  function showAuthScreen(){
+    $("authShell")?.classList.remove("hidden");
+    $("appShell")?.classList.add("hidden");
+    $("onboardingModal")?.classList.add("hidden");
+  }
+
+  async function activateSignedInApp(session){
+    currentUser=session?.user||null;
+    if(!currentUser){ showAuthScreen(); return; }
+
+    $("authShell")?.classList.add("hidden");
+    if($("accountEmail")) $("accountEmail").textContent=currentUser.email||"Signed in";
+    setCloudStatus("syncing","Loading cloud data…");
+
+    try{
+      const source=await ensureCloudData(currentUser);
+      if(source==="migrated") setCloudStatus("saved","Local data moved to cloud");
+      else if(source==="cloud") setCloudStatus("saved","Cloud data loaded");
+      else setCloudStatus("saved","Cloud account ready");
+    }catch(err){
+      console.error("Cloud load failed",err);
+      setCloudStatus("error","Cloud load failed — using local cache");
+    }
+
+    let preferredTheme=appData.theme||"dark";
+    try{ preferredTheme=localStorage.getItem("fitnessAppTheme")||preferredTheme; }catch{}
+    applyTheme(preferredTheme,{persist:false});
+    launch();
+    renderSettingsPreferences();
+    initializeResponsiveViews();
+  }
+
+  async function handleAuthSubmit(e){
+    e.preventDefault();
+    clearAuthMessage();
+    const email=$("authEmail").value.trim();
+    const password=$("authPassword").value;
+
+    try{
+      if(authMode==="signup"){
+        const name=$("authName").value.trim();
+        const confirm=$("authConfirmPassword").value;
+        if(password!==confirm) return showAuthMessage("Passwords do not match.");
+        const { data, error }=await supabaseClient.auth.signUp({
+          email,password,
+          options:{
+            data:{name},
+            emailRedirectTo:appRedirectUrl()
+          }
+        });
+        if(error) throw error;
+        if(data.session){
+          showAuthMessage("Account created. Loading your journey…","success");
+          await activateSignedInApp(data.session);
+        }else{
+          showAuthMessage("Account created. Check your email to confirm your address, then sign in.","success");
+          setAuthMode("signin");
+        }
+      }else{
+        const { data, error }=await supabaseClient.auth.signInWithPassword({email,password});
+        if(error) throw error;
+        await activateSignedInApp(data.session);
+      }
+    }catch(err){
+      showAuthMessage(err?.message||"Authentication failed. Please try again.");
+    }
+  }
+
+  async function signInWithProvider(provider){
+    clearAuthMessage();
+    const { error }=await supabaseClient.auth.signInWithOAuth({
+      provider,
+      options:{ redirectTo:appRedirectUrl() }
+    });
+    if(error) showAuthMessage(error.message);
+  }
+
+  async function sendPasswordReset(){
+    const email=$("authEmail").value.trim();
+    if(!email) return showAuthMessage("Enter your email address first.");
+    const { error }=await supabaseClient.auth.resetPasswordForEmail(email,{
+      redirectTo:appRedirectUrl()
+    });
+    if(error) showAuthMessage(error.message);
+    else showAuthMessage("Password reset email sent. Check your inbox.","success");
+  }
+
+  async function signOutUser(){
+    await persistCloudData();
+    const { error }=await supabaseClient.auth.signOut();
+    if(error){ alert(error.message); return; }
+    currentUser=null;
+    stopTimerLoop();
+    $("settingsModal")?.classList.add("hidden");
+    showAuthScreen();
+  }
+
+  async function bootstrapAuth(){
+    setAuthMode("signin");
+    const { data:{session}, error }=await supabaseClient.auth.getSession();
+    if(error) console.error(error);
+
+    if(session) await activateSignedInApp(session);
+    else showAuthScreen();
+
+    supabaseClient.auth.onAuthStateChange((event,session)=>{
+      if(event==="PASSWORD_RECOVERY"){
+        $("recoveryModal")?.classList.remove("hidden");
+        return;
+      }
+      if(event==="SIGNED_OUT"){
+        currentUser=null;
+        showAuthScreen();
+      }
+    });
   }
 
   // ---------- Native mobile date helpers ----------
@@ -3758,6 +4128,36 @@
   });
 
   // ---------- Events ----------
+  // ---------- Auth events ----------
+  $("authSignInTab")?.addEventListener("click",()=>setAuthMode("signin"));
+  $("authSignUpTab")?.addEventListener("click",()=>setAuthMode("signup"));
+  $("authForm")?.addEventListener("submit",handleAuthSubmit);
+  $("googleSignInBtn")?.addEventListener("click",()=>signInWithProvider("google"));
+  $("githubSignInBtn")?.addEventListener("click",()=>signInWithProvider("github"));
+  $("forgotPasswordBtn")?.addEventListener("click",sendPasswordReset);
+  $("signOutBtn")?.addEventListener("click",signOutUser);
+
+  $("recoveryForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const p=$("recoveryPassword").value;
+    const c=$("recoveryPasswordConfirm").value;
+    const msg=$("recoveryMessage");
+    if(p!==c){
+      msg.textContent="Passwords do not match.";
+      msg.className="auth-message show error";
+      return;
+    }
+    const { error }=await supabaseClient.auth.updateUser({password:p});
+    if(error){
+      msg.textContent=error.message;
+      msg.className="auth-message show error";
+      return;
+    }
+    msg.textContent="Password updated successfully.";
+    msg.className="auth-message show success";
+    setTimeout(()=>$("recoveryModal")?.classList.add("hidden"),700);
+  });
+
   document.addEventListener("splitdatechange",e=>{
     if(e.detail.id==="dob" || e.detail.id==="targetDate") updateOnboardingEstimate();
   });
@@ -3960,8 +4360,23 @@
     }
   });
 
-  $("resetBtn").addEventListener("click",()=>{
-    localStorage.removeItem(STORAGE_KEY);
+  $("resetBtn").addEventListener("click",async()=>{
+    if(!confirm("Reset all profile, weight and workout data for this account? This cannot be undone.")) return;
+    appData=freshData();
+    cacheLocalData();
+    if(currentUser){
+      const { error }=await supabaseClient
+        .from(CLOUD_TABLE)
+        .upsert({
+          user_id:currentUser.id,
+          data:appData,
+          updated_at:new Date().toISOString()
+        },{onConflict:"user_id"});
+      if(error){
+        alert("Cloud reset failed: "+error.message);
+        return;
+      }
+    }
     location.reload();
   });
 
@@ -3981,18 +4396,19 @@
     initialTheme=localStorage.getItem("fitnessAppTheme")||initialTheme;
   }catch{}
 
-  // Apply theme before the application initializes.
-  // persist:false avoids unnecessary state writes during startup.
+  // Apply theme before authentication initializes.
   applyTheme(initialTheme,{persist:false});
 
-  launch();
-  renderSettingsPreferences();
   preloadOfficialExerciseGifs().catch(err=>{
     console.warn("Exercise GIF preload will retry on demand.",err);
   });
   wireCompactTargetCalendar();
   syncDashboardTargetDateDisplay();
-  initializeResponsiveViews();
+  bootstrapAuth().catch(err=>{
+    console.error("Auth bootstrap failed",err);
+    showAuthScreen();
+    showAuthMessage("Could not initialize sign-in. Check your Supabase configuration and try again.");
+  });
 })();
 </script>
 </body>
