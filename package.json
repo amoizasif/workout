@@ -1,0 +1,21 @@
+{
+  "name": "workout",
+  "version": "1.0.0",
+  "description": "Weight Loss Journey App",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build required for static site'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "workout",
+    "weight-loss",
+    "fitness"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
